@@ -5,6 +5,7 @@ import { CABSection } from '@/components/CABSection'
 import { EventDetails } from '@/components/EventDetails'
 import { LeadFormSection } from '@/components/LeadFormSection'
 import { Footer } from '@/components/Footer'
+import { StickyCTA } from '@/components/StickyCTA'
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <LeadFormSection />
       </main>
       <Footer />
+      <StickyCTA />
     </>
   )
 }

@@ -1,4 +1,5 @@
 import { LeafIcon } from './LeafIcon'
+import { Countdown } from './Countdown'
 
 export function Hero() {
   return (
@@ -37,8 +38,16 @@ export function Hero() {
           minte, corp și acțiune.
         </p>
 
+        {/* Urgency badge */}
+        <div className="inline-flex items-center gap-2 bg-gold/8 border border-gold/20 px-4 py-2 mb-8">
+          <span className="w-1.5 h-1.5 bg-gold rounded-full animate-pulse" />
+          <span className="text-[11px] uppercase tracking-[0.2em] text-gold/80">
+            Locuri limitate · Rezervă înainte să se închidă
+          </span>
+        </div>
+
         {/* Price */}
-        <div className="flex items-center justify-center gap-4 mb-10">
+        <div className="flex items-center justify-center gap-4 mb-8">
           <span className="text-gray-600 line-through text-lg">150 lei</span>
           <div className="flex items-center gap-3">
             <span className="font-serif text-4xl text-gold">99 lei</span>
@@ -46,6 +55,12 @@ export function Hero() {
               Preț redus
             </span>
           </div>
+        </div>
+
+        {/* Countdown */}
+        <div className="mb-10">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-gray-600 mb-4">Timp rămas până la eveniment</p>
+          <Countdown />
         </div>
 
         {/* CTAs */}
