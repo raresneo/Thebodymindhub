@@ -41,7 +41,9 @@ export function EventDetails() {
 
         <div className="text-center">
           <a
-            href="#inscriere"
+            href="https://buy.stripe.com/fZu9AV3WAaTgfd4bfYbII0h"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block bg-gold text-black px-10 py-4 text-sm font-semibold uppercase tracking-widest hover:bg-gold-light transition-colors"
           >
             Rezervă-ți locul acum

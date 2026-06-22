@@ -189,7 +189,9 @@ export function Hero() {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
           <a
-            href="#inscriere"
+            href="https://buy.stripe.com/fZu9AV3WAaTgfd4bfYbII0h"
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full sm:w-auto bg-gold text-black px-8 py-4 text-sm font-semibold uppercase tracking-widest hover:bg-gold-light transition-colors"
           >
             Rezervă-ți locul

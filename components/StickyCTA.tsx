@@ -34,7 +34,9 @@ export function StickyCTA() {
           </div>
         </div>
         <a
-          href="#inscriere"
+          href="https://buy.stripe.com/fZu9AV3WAaTgfd4bfYbII0h"
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex-shrink-0 bg-gold text-black px-5 py-3 text-xs font-semibold uppercase tracking-widest"
         >
           Rezervă acum
