@@ -1,14 +1,137 @@
+'use client'
+
+import { useEffect, useRef } from 'react'
 import { LeafIcon } from './LeafIcon'
 import { Countdown } from './Countdown'
 
+const FLOATING_LEAVES = [
+  { x: '6%',  y: '12%', w: 'w-5  h-7',  opacity: 0.07, rY:  50, rX: -20, rZ:  15, dur: 9,  del: 0   },
+  { x: '90%', y: '18%', w: 'w-4  h-5',  opacity: 0.05, rY: -35, rX:  18, rZ: -12, dur: 11, del: 1.5 },
+  { x: '4%',  y: '68%', w: 'w-7  h-10', opacity: 0.06, rY:  65, rX:   8, rZ:   5, dur: 8,  del: 3   },
+  { x: '93%', y: '62%', w: 'w-5  h-7',  opacity: 0.05, rY: -55, rX: -22, rZ:  22, dur: 12, del: 2.5 },
+  { x: '48%', y: '4%',  w: 'w-3  h-4',  opacity: 0.04, rY:  20, rX:  45, rZ:  -8, dur: 14, del: 4   },
+  { x: '78%', y: '82%', w: 'w-6  h-9',  opacity: 0.05, rY: -42, rX: -14, rZ:  28, dur: 10, del: 0.8 },
+  { x: '18%', y: '88%', w: 'w-4  h-6',  opacity: 0.04, rY:  30, rX:  10, rZ: -18, dur: 13, del: 5   },
+]
+
+const GRID_X = [0, 160, 320, 480, 640, 800, 960, 1120, 1280, 1440]
+const GRID_Y = [500, 600, 690, 770, 835, 885, 920]
+
 export function Hero() {
+  const deepRef    = useRef<HTMLDivElement>(null)
+  const midRef     = useRef<HTMLDivElement>(null)
+  const shallowRef = useRef<HTMLDivElement>(null)
+  const rafRef     = useRef<number>(0)
+  const mouse      = useRef({ x: 0, y: 0 })
+  const cur        = useRef({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      mouse.current = {
+        x: (e.clientX / window.innerWidth  - 0.5) * 2,
+        y: (e.clientY / window.innerHeight - 0.5) * 2,
+      }
+    }
+    window.addEventListener('mousemove', onMove)
+
+    const tick = () => {
+      const f = 0.055
+      cur.current.x += (mouse.current.x - cur.current.x) * f
+      cur.current.y += (mouse.current.y - cur.current.y) * f
+      const { x, y } = cur.current
+
+      if (deepRef.current)
+        deepRef.current.style.transform = `translate(${x * -38}px, ${y * -26}px)`
+      if (midRef.current)
+        midRef.current.style.transform = `translate(${x * -18}px, ${y * -12}px)`
+      if (shallowRef.current)
+        shallowRef.current.style.transform = `translate(${x * -7}px, ${y * -5}px)`
+
+      rafRef.current = requestAnimationFrame(tick)
+    }
+    rafRef.current = requestAnimationFrame(tick)
+
+    return () => {
+      window.removeEventListener('mousemove', onMove)
+      cancelAnimationFrame(rafRef.current)
+    }
+  }, [])
+
   return (
     <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden px-6 py-20">
-      {/* Background decorative leaf watermark */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-        <LeafIcon className="w-[500px] h-[700px] text-gold opacity-[0.025]" />
+
+      {/* ── Layer 0: Surrealist perspective grid ── */}
+      <div className="absolute inset-0 pointer-events-none select-none" style={{ animation: 'grid-fade-in 2s ease forwards' }}>
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1440 960" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="lineFade" x1="720" y1="420" x2="720" y2="960" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="rgba(200,168,75,0)" />
+              <stop offset="100%" stopColor="rgba(200,168,75,0.045)" />
+            </linearGradient>
+          </defs>
+          {/* Radial lines converging to vanishing point */}
+          <g stroke="url(#lineFade)" strokeWidth="0.6">
+            {GRID_X.map(x => (
+              <line key={x} x1={x} y1="960" x2="720" y2="420" />
+            ))}
+          </g>
+          {/* Horizontal floor lines */}
+          <g stroke="rgba(200,168,75,0.025)" strokeWidth="0.5">
+            {GRID_Y.map(y => (
+              <line key={y} x1="0" y1={y} x2="1440" y2={y} />
+            ))}
+          </g>
+        </svg>
       </div>
 
+      {/* ── Layer 1: Large leaf watermark (deepest, moves most) ── */}
+      <div
+        ref={deepRef}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+        style={{ willChange: 'transform' }}
+      >
+        <div style={{ transform: 'perspective(900px) rotateY(12deg) rotateX(6deg)', opacity: 0.022, filter: 'blur(1px)' }}>
+          <LeafIcon className="w-[540px] h-[760px] text-gold" />
+        </div>
+      </div>
+
+      {/* ── Layer 2: Floating 3D leaves (mid depth) ── */}
+      <div
+        ref={midRef}
+        className="absolute inset-0 pointer-events-none select-none"
+        style={{ willChange: 'transform' }}
+      >
+        {FLOATING_LEAVES.map((leaf, i) => (
+          <div
+            key={i}
+            className={`absolute ${leaf.w} text-gold`}
+            style={{
+              left: leaf.x,
+              top: leaf.y,
+              opacity: leaf.opacity,
+              transform: `perspective(500px) rotateY(${leaf.rY}deg) rotateX(${leaf.rX}deg) rotateZ(${leaf.rZ}deg)`,
+              animation: `float-xy ${leaf.dur}s ease-in-out infinite`,
+              animationDelay: `${leaf.del}s`,
+            }}
+          >
+            <LeafIcon className="w-full h-full" />
+          </div>
+        ))}
+      </div>
+
+      {/* ── Layer 3: Corner brackets (shallowest depth) ── */}
+      <div
+        ref={shallowRef}
+        className="absolute inset-0 pointer-events-none"
+        style={{ willChange: 'transform' }}
+      >
+        <div className="absolute top-7 left-7 w-10 h-10 border-l border-t border-gold/12" />
+        <div className="absolute top-7 right-7 w-10 h-10 border-r border-t border-gold/12" />
+        <div className="absolute bottom-10 left-7 w-10 h-10 border-l border-b border-gold/12" />
+        <div className="absolute bottom-10 right-7 w-10 h-10 border-r border-b border-gold/12" />
+      </div>
+
+      {/* ── Content ── */}
       <div className="relative z-10 text-center max-w-4xl mx-auto">
         {/* Brand mark */}
         <div className="flex items-center justify-center gap-3 mb-6">
@@ -97,7 +220,7 @@ export function Hero() {
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0A0A0A] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0A0A0A] to-transparent pointer-events-none" />
     </section>
   )
 }

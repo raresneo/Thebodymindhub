@@ -7,10 +7,12 @@ import { EventDetails } from '@/components/EventDetails'
 import { LeadFormSection } from '@/components/LeadFormSection'
 import { Footer } from '@/components/Footer'
 import { StickyCTA } from '@/components/StickyCTA'
+import { SurrealBackground } from '@/components/SurrealBackground'
 
 export default function Home() {
   return (
     <>
+      <SurrealBackground />
       <Navbar />
       <main>
         <Hero />

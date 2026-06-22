@@ -15,6 +15,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://thebodymindhub.com'),
   title: 'Fit fără filtre — Body Mind Hub',
   description:
     'O seară fără filtre despre cum arată cu adevărat sănătatea — minte, corp, acțiune. 29 iulie 2026, Merci Bistro, Oradea. Bilet 99 lei.',

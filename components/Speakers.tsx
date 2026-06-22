@@ -1,13 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 const speakers = [
   {
     name: 'Rareș Pantis',
     role: 'Fondator & Specialist Fitness',
-    bio: 'Kinetoterapeut, antreprenor și fondatorul NeoBoost. Transformat sute de oameni prin metode bazate pe știință, nu pe trend-uri. Demontează miturile fitness și îți arată cum arată cu adevărat schimbarea corpului.',
+    bio: 'Kinetoterapeut, antreprenor și fondatorul NeoBoost. A transformat sute de oameni prin metode bazate pe știință, nu pe trend-uri. Demontează miturile fitness și îți arată cum arată cu adevărat schimbarea corpului.',
     image: '/images/rares.jpg',
     initials: 'RP',
     pillar: 'Act',
@@ -22,8 +22,8 @@ const speakers = [
   },
   {
     name: 'Cristina Cecan',
-    role: 'Psiholog Sportiv',
-    bio: 'Expert în psihologia performanței și motivației. Ajută oamenii să construiască sisteme reale de disciplină, să elimine auto-sabotajul și să comunice autentic cu propriul corp.',
+    role: 'Psiholog Clinician',
+    bio: 'Specializată în relația cu mâncarea și imaginea corporală. Identifică blocajele ascunse care fac procesul de slăbire imposibil — de la cogniții iraționale despre propriul corp la emoțiile care conduc alegerile alimentare. Ajută oamenii să schimbe raportul cu propriul corp, nu doar cu cântarul.',
     image: '/images/cristina.jpg',
     initials: 'CC',
     pillar: 'Speak',
@@ -46,27 +46,60 @@ export function Speakers() {
 
         <div className="grid md:grid-cols-3 gap-6">
           {speakers.map((speaker) => (
-            <div key={speaker.name} className="group border border-white/8 hover:border-gold/20 transition-colors">
-              {/* Photo */}
-              <div className="relative aspect-[4/5] bg-[#111] overflow-hidden">
-                <SpeakerImage speaker={speaker} />
-                {/* Pillar badge */}
-                <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm border border-gold/30 px-3 py-1">
-                  <span className="text-[10px] uppercase tracking-widest text-gold">{speaker.pillar}</span>
-                </div>
-              </div>
-
-              {/* Info */}
-              <div className="p-6">
-                <h3 className="font-serif text-xl text-white mb-1">{speaker.name}</h3>
-                <p className="text-gold text-xs uppercase tracking-wide mb-4">{speaker.role}</p>
-                <p className="text-gray-400 text-sm leading-relaxed">{speaker.bio}</p>
-              </div>
-            </div>
+            <SpeakerCard key={speaker.name} speaker={speaker} />
           ))}
         </div>
       </div>
     </section>
+  )
+}
+
+function SpeakerCard({ speaker }: { speaker: typeof speakers[0] }) {
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    const x = ((e.clientX - r.left) / r.width  - 0.5) * 2
+    const y = ((e.clientY - r.top)  / r.height - 0.5) * 2
+    el.style.transition = 'transform 0.08s linear, border-color 0.3s ease'
+    el.style.transform  = `perspective(900px) rotateY(${x * 9}deg) rotateX(${-y * 9}deg) translateZ(14px)`
+  }
+
+  const onLeave = () => {
+    const el = cardRef.current
+    if (!el) return
+    el.style.transition = 'transform 0.55s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.3s ease'
+    el.style.transform  = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateZ(0px)'
+  }
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className="group border border-white/8 hover:border-gold/25 overflow-hidden"
+      style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
+    >
+      {/* Photo */}
+      <div className="relative aspect-[4/5] bg-[#111] overflow-hidden">
+        <SpeakerImage speaker={speaker} />
+        {/* Pillar badge */}
+        <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm border border-gold/30 px-3 py-1 z-10">
+          <span className="text-[10px] uppercase tracking-widest text-gold">{speaker.pillar}</span>
+        </div>
+        {/* Bottom fade — blends photo into card */}
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0f0f0f] to-transparent z-10 pointer-events-none" />
+      </div>
+
+      {/* Info */}
+      <div className="p-6 bg-[#0f0f0f]">
+        <h3 className="font-serif text-xl text-white mb-1">{speaker.name}</h3>
+        <p className="text-gold text-xs uppercase tracking-wide mb-4">{speaker.role}</p>
+        <p className="text-gray-400 text-sm leading-relaxed">{speaker.bio}</p>
+      </div>
+    </div>
   )
 }
 
@@ -78,7 +111,7 @@ function SpeakerImage({ speaker }: { speaker: typeof speakers[0] }) {
       src={speaker.image}
       alt={`${speaker.name} — ${speaker.role}`}
       fill
-      className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+      className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
       sizes="(max-width: 768px) 100vw, 33vw"
       onError={() => setFailed(true)}
     />
