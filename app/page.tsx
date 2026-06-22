@@ -1,6 +1,7 @@
 import { Navbar } from '@/components/Navbar'
 import { Hero } from '@/components/Hero'
 import { EventConcept } from '@/components/EventConcept'
+import { Speakers } from '@/components/Speakers'
 import { CABSection } from '@/components/CABSection'
 import { EventDetails } from '@/components/EventDetails'
 import { LeadFormSection } from '@/components/LeadFormSection'
@@ -14,6 +15,7 @@ export default function Home() {
       <main>
         <Hero />
         <EventConcept />
+        <Speakers />
         <CABSection />
         <EventDetails />
         <LeadFormSection />
