@@ -13,11 +13,11 @@ const speakers = [
     pillar: 'Act',
   },
   {
-    name: 'Claudia',
+    name: 'Claudia Cosma',
     role: 'Psiholog Clinician',
     bio: 'Specialist în psihologia corpului și relația dintre emoții și comportamente. Lucrează cu oameni care vor să înțeleagă de ce știu ce trebuie să facă, dar tot nu o fac — și cum se schimbă asta.',
     image: '/images/claudia.jpg',
-    initials: 'C',
+    initials: 'CC',
     pillar: 'Think',
   },
   {
@@ -32,9 +32,9 @@ const speakers = [
 
 export function Speakers() {
   return (
-    <section className="py-24 px-6 border-t border-white/5">
+    <section className="py-16 sm:py-24 px-5 sm:px-6 border-t border-white/5">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <p className="text-xs uppercase tracking-[0.3em] text-gold/70 mb-4">Cine ești pe scenă</p>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-white mb-4">
             Specialiștii serii
@@ -44,7 +44,7 @@ export function Speakers() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6">
           {speakers.map((speaker) => (
             <SpeakerCard key={speaker.name} speaker={speaker} />
           ))}
@@ -94,10 +94,10 @@ function SpeakerCard({ speaker }: { speaker: typeof speakers[0] }) {
       </div>
 
       {/* Info */}
-      <div className="p-6 bg-[#0f0f0f]">
-        <h3 className="font-serif text-xl text-white mb-1">{speaker.name}</h3>
-        <p className="text-gold text-xs uppercase tracking-wide mb-4">{speaker.role}</p>
-        <p className="text-gray-400 text-sm leading-relaxed">{speaker.bio}</p>
+      <div className="p-5 sm:p-6 bg-[#0f0f0f]">
+        <h3 className="font-serif text-2xl sm:text-xl text-white mb-1">{speaker.name}</h3>
+        <p className="text-gold text-xs uppercase tracking-wide mb-3">{speaker.role}</p>
+        <p className="text-gray-300 sm:text-gray-400 text-[15px] sm:text-sm leading-relaxed">{speaker.bio}</p>
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 export function EventDetails() {
   return (
-    <section className="py-24 px-6 border-t border-white/5">
+    <section className="py-16 sm:py-24 px-5 sm:px-6 border-t border-white/5">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <p className="text-xs uppercase tracking-[0.3em] text-gold/70 mb-4">Detalii practice</p>

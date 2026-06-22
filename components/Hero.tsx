@@ -95,10 +95,10 @@ export function Hero() {
         </div>
       </div>
 
-      {/* ── Layer 2: Floating 3D leaves (mid depth) ── */}
+      {/* ── Layer 2: Floating 3D leaves (mid depth, desktop only) ── */}
       <div
         ref={midRef}
-        className="absolute inset-0 pointer-events-none select-none"
+        className="hidden md:block absolute inset-0 pointer-events-none select-none"
         style={{ willChange: 'transform' }}
       >
         {FLOATING_LEAVES.map((leaf, i) => (

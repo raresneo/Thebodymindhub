@@ -39,29 +39,29 @@ const sections = [
 
 export function CABSection() {
   return (
-    <section className="py-24 px-6 bg-[#080808]">
+    <section className="py-16 sm:py-24 px-5 sm:px-6 bg-[#080808]">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <p className="text-xs uppercase tracking-[0.3em] text-gold/70 mb-4">De ce să vii</p>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-white">
             Tot ce primești în această seară
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           {sections.map((section) => (
             <div
               key={section.title}
-              className="border border-white/8 p-8 hover:border-gold/20 transition-colors flex flex-col"
+              className="border border-white/8 p-6 sm:p-8 hover:border-gold/20 transition-colors flex flex-col"
             >
               <div className="flex items-center gap-2.5 mb-2">
                 <span className="text-gold text-base">{section.icon}</span>
                 <span className="text-xs uppercase tracking-[0.25em] text-gray-500">{section.subtitle}</span>
               </div>
-              <h3 className="font-serif text-2xl text-white mb-7">{section.title}</h3>
-              <ul className="space-y-4 flex-1">
+              <h3 className="font-serif text-2xl text-white mb-5 sm:mb-7">{section.title}</h3>
+              <ul className="space-y-3 sm:space-y-4 flex-1">
                 {section.items.map((item, j) => (
-                  <li key={j} className="flex items-start gap-3 text-gray-400 text-sm leading-relaxed">
+                  <li key={j} className="flex items-start gap-3 text-gray-300 sm:text-gray-400 text-[15px] sm:text-sm leading-relaxed">
                     <span className="text-gold/60 mt-0.5 flex-shrink-0 text-xs">—</span>
                     {item}
                   </li>
