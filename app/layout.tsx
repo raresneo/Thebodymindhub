@@ -23,6 +23,11 @@ export const metadata: Metadata = {
     description: 'O seară fără filtre despre cum arată cu adevărat sănătatea.',
     type: 'website',
     locale: 'ro_RO',
+    images: [{ url: '/images/og-image.jpg', width: 1200, height: 800 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/images/og-image.jpg'],
   },
 }
 
