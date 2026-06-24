@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Cerere invalidă.' }, { status: 400 })
   }
 
-  const { nume, prenume, email, telefon, dataNasterii } = body
+  const { nume, prenume, email, telefon } = body
 
   if (!nume?.trim() || !prenume?.trim() || !email?.trim() || !telefon?.trim()) {
     return NextResponse.json({ error: 'Câmpurile obligatorii lipsesc.' }, { status: 400 })
@@ -27,12 +27,9 @@ export async function POST(request: Request) {
     `Nume: ${nume}`,
     `Email: ${email}`,
     `Telefon: ${telefon}`,
-    dataNasterii ? `Data nașterii: ${dataNasterii}` : null,
     `Eveniment: Fit fără filtre — 29 iulie 2026`,
-    `Sursă: website`,
-  ]
-    .filter(Boolean)
-    .join('\n')
+    `Sursă: formular website`,
+  ].join('\n')
 
   const res = await fetch(`https://api.clickup.com/api/v2/list/${listId}/task`, {
     method: 'POST',

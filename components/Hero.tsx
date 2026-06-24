@@ -224,9 +224,7 @@ export function Hero() {
             Rezervă acum
           </a>
           <a
-            href="https://wa.me/40742353586?text=Vreau%20s%C4%83%20particip%20la%20Fit%20f%C4%83r%C4%83%20filtre"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/api/whatsapp"
             className="w-full sm:w-auto flex items-center justify-center gap-2 border border-white/10 text-white px-8 py-4 text-sm font-medium hover:border-white/20 hover:bg-white/5 transition-colors"
           >
             <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
