@@ -12,7 +12,7 @@ export function Navbar() {
           href="#inscriere"
           className="text-xs uppercase tracking-widest text-gold border border-gold/40 px-5 py-2.5 hover:bg-gold/10 transition-colors"
         >
-          Rezervă locul
+          Rezervă acum
         </a>
       </div>
     </header>

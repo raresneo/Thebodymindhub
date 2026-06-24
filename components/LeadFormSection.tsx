@@ -10,8 +10,7 @@ export function LeadFormSection() {
             Rezervă-ți locul
           </h2>
           <p className="text-gray-400 max-w-md mx-auto text-sm leading-relaxed">
-            Completează formularul și te contactăm în 24h cu detaliile de plată.
-            Locurile sunt limitate.
+            Completează formularul. Locurile sunt limitate.
           </p>
         </div>
 
@@ -38,7 +37,7 @@ export function LeadFormSection() {
             className="w-full flex items-center justify-center gap-3 border border-white/10 text-white px-6 py-4 text-sm font-medium hover:border-white/20 hover:bg-white/5 transition-colors"
           >
             <WhatsAppIcon className="w-5 h-5 text-[#25D366]" />
-            Înscrie-te rapid pe WhatsApp
+            Detalii / info suplimentare pe WhatsApp
           </a>
         </div>
       </div>

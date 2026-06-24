@@ -1,8 +1,38 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { LeafIcon } from './LeafIcon'
 import { Countdown } from './Countdown'
+
+function computeSeats(): number {
+  const now = Date.now()
+  if (now <= new Date('2026-06-30T23:59:59').getTime()) return 30
+  if (now <= new Date('2026-07-07T23:59:59').getTime()) return 20
+  if (now <= new Date('2026-07-14T23:59:59').getTime()) return 14
+  if (now <= new Date('2026-07-21T23:59:59').getTime()) return 10
+  if (now <= new Date('2026-07-26T23:59:59').getTime()) return 7
+  const start = new Date('2026-07-27T00:00:00').getTime()
+  const end = new Date('2026-07-29T19:00:00').getTime()
+  const progress = Math.min((now - start) / (end - start), 1)
+  return Math.max(4, Math.round(7 - 3 * progress))
+}
+
+function SeatsCounterBadge() {
+  const [seats, setSeats] = useState(computeSeats)
+  useEffect(() => {
+    const id = setInterval(() => setSeats(computeSeats()), 3_600_000)
+    return () => clearInterval(id)
+  }, [])
+  const urgent = seats <= 7
+  return (
+    <div className={`inline-flex items-center gap-2 border px-4 py-2 ${urgent ? 'border-red-500/30 bg-red-500/5' : 'border-gold/20 bg-gold/8'}`}>
+      <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${urgent ? 'bg-red-400' : 'bg-gold'}`} />
+      <span className={`text-[11px] uppercase tracking-[0.2em] ${urgent ? 'text-red-400' : 'text-gold/80'}`}>
+        {seats <= 4 ? `Ultimele ${seats} locuri disponibile` : `${seats} locuri disponibile`}
+      </span>
+    </div>
+  )
+}
 
 const FLOATING_LEAVES = [
   { x: '6%',  y: '12%', w: 'w-5  h-7',  opacity: 0.07, rY:  50, rX: -20, rZ:  15, dur: 9,  del: 0   },
@@ -161,12 +191,9 @@ export function Hero() {
           minte, corp și acțiune.
         </p>
 
-        {/* Urgency badge */}
-        <div className="inline-flex items-center gap-2 bg-gold/8 border border-gold/20 px-4 py-2 mb-8">
-          <span className="w-1.5 h-1.5 bg-gold rounded-full animate-pulse" />
-          <span className="text-[11px] uppercase tracking-[0.2em] text-gold/80">
-            Locuri limitate · Rezervă înainte să se închidă
-          </span>
+        {/* Seats counter */}
+        <div className="mb-8">
+          <SeatsCounterBadge />
         </div>
 
         {/* Price */}
@@ -194,7 +221,7 @@ export function Hero() {
             rel="noopener noreferrer"
             className="w-full sm:w-auto bg-gold text-black px-8 py-4 text-sm font-semibold uppercase tracking-widest hover:bg-gold-light transition-colors"
           >
-            Rezervă-ți locul
+            Rezervă acum
           </a>
           <a
             href="https://wa.me/40742353586?text=Vreau%20s%C4%83%20particip%20la%20Fit%20f%C4%83r%C4%83%20filtre"

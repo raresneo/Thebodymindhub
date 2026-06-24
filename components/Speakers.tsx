@@ -6,8 +6,8 @@ import { useRef, useState } from 'react'
 const speakers = [
   {
     name: 'Rareș Pantis',
-    role: 'Fondator & Specialist Fitness',
-    bio: 'Kinetoterapeut, antreprenor și fondatorul NeoBoost. A transformat sute de oameni prin metode bazate pe știință, nu pe trend-uri. Demontează miturile fitness și îți arată cum arată cu adevărat schimbarea corpului.',
+    role: 'Fondator NeoBoost · Specialist mișcare & recuperare',
+    bio: 'Masterand în balneofizio-kinetoterapie, cu peste 13 ani de practică sportivă și 10 ani de antreprenoriat. A construit NeoBoost și a transformat sute de oameni prin metode bazate pe știință, nu pe trenduri. Pe scenă demontează miturile fitness și îți arată cum arată schimbarea reală a corpului.',
     image: '/images/rares.jpg',
     initials: 'RP',
     pillar: 'Act',
@@ -15,7 +15,7 @@ const speakers = [
   {
     name: 'Claudia Cosma',
     role: 'Psiholog Clinician',
-    bio: 'Specialist în psihologia corpului și relația dintre emoții și comportamente. Lucrează cu oameni care vor să înțeleagă de ce știu ce trebuie să facă, dar tot nu o fac — și cum se schimbă asta.',
+    bio: 'Specialist în psihologia corpului și relația dintre gânduri și comportamente. Lucrează cu oameni care vor să înțeleagă de ce știu ce trebuie să facă, dar tot nu o fac — și cum se schimbă asta.',
     image: '/images/claudia.jpg',
     initials: 'CC',
     pillar: 'Think',
@@ -23,7 +23,7 @@ const speakers = [
   {
     name: 'Cristina Cecan',
     role: 'Psiholog Clinician',
-    bio: 'Specializată în relația cu mâncarea și imaginea corporală. Identifică blocajele ascunse care fac procesul de slăbire imposibil — de la cogniții iraționale despre propriul corp la emoțiile care conduc alegerile alimentare. Ajută oamenii să schimbe raportul cu propriul corp, nu doar cu cântarul.',
+    bio: 'Specializată în relația cu mâncarea și imaginea corporală. Identifică blocajele ascunse care fac procesul de slăbire imposibil — și emoțiile care conduc alegerile alimentare. Ajută oamenii să schimbe raportul cu propriul corp, nu doar cu cântarul.',
     image: '/images/cristina.jpg',
     initials: 'CC',
     pillar: 'Speak',

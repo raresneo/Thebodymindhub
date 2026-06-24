@@ -5,7 +5,7 @@ const pillars = [
     ro: 'Gândește',
     description:
       'Descoperă tiparele mentale care te țin pe loc. Psihologia din spatele motivației, disciplinei și schimbării reale — de ce știi ce trebuie să faci, dar tot nu o faci.',
-    speaker: 'Claudia',
+    speaker: 'Claudia Cosma',
   },
   {
     index: '02',

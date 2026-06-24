@@ -7,7 +7,7 @@ interface FormData {
   prenume: string
   email: string
   telefon: string
-  dataNasterii: string
+  gdpr: boolean
 }
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
@@ -18,25 +18,31 @@ export function LeadForm() {
     prenume: '',
     email: '',
     telefon: '',
-    dataNasterii: '',
+    gdpr: false,
   })
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    const { name, value, type, checked } = e.target
+    setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!form.gdpr) {
+      setErrorMsg('Te rugăm să accepti Politica de confidențialitate pentru a continua.')
+      return
+    }
     setStatus('loading')
     setErrorMsg('')
 
     try {
+      const { gdpr: _, ...payload } = form
       const res = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       })
 
       if (!res.ok) {
@@ -63,7 +69,7 @@ export function LeadForm() {
         </div>
         <h3 className="font-serif text-2xl text-white mb-3">Locul tău e rezervat!</h3>
         <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-          Te contactăm în curând cu detaliile de plată și confirmare.
+          Mulțumim! Am primit rezervarea ta, revenim cu detaliile de plată.
           <br />
           Ne vedem pe 29 iulie la Merci Bistro!
         </p>
@@ -143,21 +149,46 @@ export function LeadForm() {
         />
       </div>
 
-      <div>
-        <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-2">
-          Data nașterii{' '}
-          <span className="text-gray-600 normal-case tracking-normal text-xs">(opțional)</span>
+      {/* GDPR consent */}
+      <div className="flex items-start gap-3 pt-1">
+        <div className="relative flex-shrink-0 mt-0.5">
+          <input
+            type="checkbox"
+            name="gdpr"
+            id="gdpr"
+            checked={form.gdpr}
+            onChange={handleChange}
+            className="sr-only"
+          />
+          <label
+            htmlFor="gdpr"
+            className={`w-4 h-4 border flex items-center justify-center cursor-pointer transition-colors ${form.gdpr ? 'bg-gold border-gold' : 'bg-transparent border-white/20 hover:border-gold/40'}`}
+          >
+            {form.gdpr && (
+              <svg className="w-2.5 h-2.5 text-black" viewBox="0 0 10 10" fill="none">
+                <path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
+          </label>
+        </div>
+        <label htmlFor="gdpr" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
+          Am citit și sunt de acord cu{' '}
+          <a
+            href="/politica-de-confidentialitate"
+            target="_blank"
+            className="text-gold/80 hover:text-gold underline underline-offset-2 transition-colors"
+          >
+            Politica de confidențialitate
+          </a>
+          . Înțeleg că datele mele vor fi folosite exclusiv pentru organizarea evenimentului.{' '}
+          <span className="text-gold">*</span>
         </label>
-        <input
-          type="date"
-          name="dataNasterii"
-          value={form.dataNasterii}
-          onChange={handleChange}
-          className="w-full bg-[#111] border border-white/10 text-white px-4 py-3 text-sm focus:outline-none focus:border-gold/40 transition-colors"
-        />
       </div>
 
       {status === 'error' && (
+        <p className="text-red-400 text-sm">{errorMsg}</p>
+      )}
+      {!form.gdpr && errorMsg && status !== 'error' && (
         <p className="text-red-400 text-sm">{errorMsg}</p>
       )}
 
@@ -166,11 +197,11 @@ export function LeadForm() {
         disabled={status === 'loading'}
         className="w-full bg-gold text-black py-4 text-sm font-semibold uppercase tracking-widest hover:bg-gold-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-2"
       >
-        {status === 'loading' ? 'Se trimite...' : 'Rezervă-mi locul'}
+        {status === 'loading' ? 'Se trimite...' : 'Rezervă acum'}
       </button>
 
       <p className="text-center text-xs text-gray-600 pt-1">
-        Te contactăm în 24h cu detaliile de plată. Locuri limitate.
+        Locuri limitate.
       </p>
     </form>
   )

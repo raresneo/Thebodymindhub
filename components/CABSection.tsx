@@ -18,7 +18,7 @@ const sections = [
     items: [
       'Fără promisiuni false — doar informație validată și imediat aplicabilă',
       'Centrat pe realitatea ta, nu pe experiența speakerilor',
-      'Eveniment interactiv — nu o conferință clasică cu prezentări pasive',
+      'Eveniment interactiv — nu o prezentare clasică, pasivă',
       'Trei perspective complementare: psihologie, corp și comportament alimentar',
       'Combinația unică: minte + corp + acțiune, în aceeași seară',
     ],

@@ -14,7 +14,8 @@ export function EventDetails() {
             </div>
             <p className="text-xs uppercase tracking-widest text-gray-500 mb-2">Data</p>
             <p className="font-serif text-xl text-white">29 iulie 2026</p>
-            <p className="text-gray-600 text-sm mt-1">Marți seara</p>
+            <p className="text-gray-600 text-sm mt-1">Miercuri seara</p>
+            <p className="text-gold/60 text-xs mt-1.5 tracking-wide">Începe la ora 19:00</p>
           </div>
 
           <div className="text-center p-8 border border-white/8">
@@ -22,8 +23,17 @@ export function EventDetails() {
               <LocationIcon className="w-5 h-5 text-gold" />
             </div>
             <p className="text-xs uppercase tracking-widest text-gray-500 mb-2">Locație</p>
-            <p className="font-serif text-xl text-white">Merci Bistro</p>
-            <p className="text-gray-600 text-sm mt-1">Oradea</p>
+            <p className="font-serif text-xl text-white">Merci Bistro & Coffee</p>
+            <p className="text-gray-600 text-sm mt-1">Strada Aurel Lazăr nr. 1, Oradea</p>
+            <a
+              href="https://maps.google.com/?q=Merci+Bistro+Coffee+Strada+Aurel+Lazăr+1+Oradea"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-gold/60 text-xs mt-2 hover:text-gold transition-colors"
+            >
+              <MapPinIcon className="w-3 h-3" />
+              Vezi pe hartă
+            </a>
           </div>
 
           <div className="text-center p-8 border border-gold/20 bg-gold/5">
@@ -46,7 +56,7 @@ export function EventDetails() {
             rel="noopener noreferrer"
             className="inline-block bg-gold text-black px-10 py-4 text-sm font-semibold uppercase tracking-widest hover:bg-gold-light transition-colors"
           >
-            Rezervă-ți locul acum
+            Rezervă acum
           </a>
         </div>
       </div>
@@ -70,6 +80,14 @@ function LocationIcon({ className }: { className?: string }) {
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
       <circle cx="12" cy="10" r="3" />
+    </svg>
+  )
+}
+
+function MapPinIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
     </svg>
   )
 }
