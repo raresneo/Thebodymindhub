@@ -25,45 +25,56 @@ export function FAQSection() {
   const [open, setOpen] = useState<number | null>(null)
 
   return (
-    <section className="py-16 sm:py-24 px-5 sm:px-6 border-t border-white/5">
+    <section className="py-16 sm:py-24 px-5 sm:px-6 border-t border-white/5 bg-[#080808]">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-10 sm:mb-14">
+
+        <div className="text-center mb-12 sm:mb-16">
           <p className="text-xs uppercase tracking-[0.3em] text-gold/70 mb-4">Întrebări frecvente</p>
-          <h2 className="font-serif text-3xl sm:text-4xl text-white">Ai întrebări?</h2>
+          <h2 className="font-serif text-3xl sm:text-4xl text-white">Tot ce vrei să știi</h2>
         </div>
 
-        <div className="space-y-2">
-          {faqs.map((faq, i) => (
-            <div key={i} className="border border-white/8 hover:border-white/12 transition-colors">
-              <button
-                onClick={() => setOpen(open === i ? null : i)}
-                className="w-full flex items-center justify-between px-6 py-5 text-left group"
-              >
-                <span className="text-white text-[15px] sm:text-base font-medium pr-4 group-hover:text-gold/90 transition-colors">
-                  {faq.q}
-                </span>
-                <span className={`text-gold/50 flex-shrink-0 transition-transform duration-200 ${open === i ? 'rotate-45' : ''}`}>
-                  <PlusIcon className="w-4 h-4" />
-                </span>
-              </button>
-              {open === i && (
-                <div className="px-6 pb-5">
-                  <p className="text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
-                    {faq.a}
-                  </p>
+        <div className="space-y-0 divide-y divide-white/5">
+          {faqs.map((faq, i) => {
+            const isOpen = open === i
+            return (
+              <div key={i}>
+                <button
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="w-full flex items-start justify-between py-6 sm:py-7 text-left group"
+                >
+                  {/* Number */}
+                  <span className="font-serif text-2xl text-gold/15 leading-none mr-5 flex-shrink-0 pt-0.5 select-none group-hover:text-gold/30 transition-colors">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  {/* Question */}
+                  <span className={`flex-1 text-[15px] sm:text-base leading-snug transition-colors pr-6 ${isOpen ? 'text-white' : 'text-gray-300 group-hover:text-white'}`}>
+                    {faq.q}
+                  </span>
+                  {/* Icon */}
+                  <span className={`flex-shrink-0 mt-0.5 transition-transform duration-300 ${isOpen ? 'rotate-45 text-gold/60' : 'text-gray-600 group-hover:text-gray-400'}`}>
+                    <PlusIcon className="w-4 h-4" />
+                  </span>
+                </button>
+
+                {/* Answer — smooth CSS grid animation */}
+                <div className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                  <div className="overflow-hidden">
+                    <div className="pb-6 sm:pb-8 pl-12 sm:pl-14">
+                      <div className="w-6 h-px bg-gold/30 mb-4" />
+                      <p className="text-gray-400 text-sm leading-relaxed">{faq.a}</p>
+                    </div>
+                  </div>
                 </div>
-              )}
-            </div>
-          ))}
+              </div>
+            )
+          })}
         </div>
 
-        <div className="text-center mt-10">
+        <div className="text-center mt-12">
           <p className="text-gray-600 text-sm">
             Altă întrebare?{' '}
             <a
-              href="https://wa.me/40742353586"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/api/whatsapp"
               className="text-gold/70 hover:text-gold transition-colors"
             >
               Scrie-ne pe WhatsApp

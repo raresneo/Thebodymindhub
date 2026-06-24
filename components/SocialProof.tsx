@@ -23,40 +23,59 @@ const testimonials = [
 
 export function SocialProof() {
   return (
-    <section className="py-16 sm:py-24 px-5 sm:px-6 border-t border-white/5 bg-[#080808]">
+    <section className="py-16 sm:py-24 px-5 sm:px-6 border-t border-white/5">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-10 sm:mb-14">
-          <p className="text-xs uppercase tracking-[0.3em] text-gold/70 mb-4">Ce spun oamenii</p>
-          <h2 className="font-serif text-3xl sm:text-4xl text-white mb-3">
-            Rezultate reale de la clienții NeoBoost
+
+        {/* Header */}
+        <div className="text-center mb-12 sm:mb-16">
+          <p className="text-xs uppercase tracking-[0.3em] text-gold/70 mb-4">Social proof</p>
+          <h2 className="font-serif text-3xl sm:text-4xl text-white mb-5">
+            Ce spun clienții NeoBoost
           </h2>
-          <div className="flex items-center justify-center gap-2 mt-4">
+          <div className="inline-flex items-center gap-2.5 border border-gold/15 px-4 py-2 bg-gold/5">
             <div className="flex gap-0.5">
               {Array.from({ length: 5 }).map((_, i) => (
-                <StarIcon key={i} className="w-4 h-4 text-gold" />
+                <StarIcon key={i} className="w-3.5 h-3.5 text-gold" />
               ))}
             </div>
-            <span className="text-sm text-gray-500 ml-1">5.0 · Google Reviews</span>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-gray-500">5.0 · Google Reviews</span>
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+        {/* Cards grid — horizontal scroll on mobile */}
+        <div className="flex sm:grid sm:grid-cols-2 gap-4 sm:gap-5 overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none pb-4 sm:pb-0 -mx-5 sm:mx-0 px-5 sm:px-0">
           {testimonials.map((t, i) => (
-            <div key={i} className="border border-white/8 p-6 sm:p-7 hover:border-gold/15 transition-colors">
-              <div className="flex gap-0.5 mb-4">
+            <div
+              key={i}
+              className="relative flex-shrink-0 w-[85vw] sm:w-auto snap-start bg-[#0d0d0d] border border-white/8 p-6 sm:p-8 hover:border-gold/20 transition-colors group overflow-hidden"
+            >
+              {/* Decorative large quote mark */}
+              <span
+                className="absolute top-3 right-5 font-serif text-8xl leading-none text-gold/5 select-none pointer-events-none"
+                aria-hidden
+              >
+                &ldquo;
+              </span>
+
+              {/* Stars */}
+              <div className="flex gap-0.5 mb-5">
                 {Array.from({ length: t.stars }).map((_, j) => (
                   <StarIcon key={j} className="w-3.5 h-3.5 text-gold" />
                 ))}
               </div>
-              <p className="text-gray-300 text-[15px] sm:text-sm leading-relaxed mb-5 italic">
-                &ldquo;{t.text}&rdquo;
+
+              {/* Quote */}
+              <p className="text-gray-200 text-[15px] sm:text-sm leading-relaxed mb-6 relative">
+                {t.text}
               </p>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-gold text-[11px] font-medium">{t.name.charAt(0)}</span>
+
+              {/* Author */}
+              <div className="flex items-center gap-3 pt-5 border-t border-white/5">
+                <div className="w-9 h-9 flex items-center justify-center flex-shrink-0 border border-gold/25 bg-gold/8">
+                  <span className="font-serif text-sm text-gold">{t.name.charAt(0)}</span>
                 </div>
                 <div>
-                  <p className="text-white text-sm font-medium">{t.name}</p>
+                  <p className="text-white text-sm font-medium leading-none mb-1">{t.name}</p>
                   <p className="text-gray-600 text-xs">Client NeoBoost</p>
                 </div>
               </div>
@@ -64,14 +83,15 @@ export function SocialProof() {
           ))}
         </div>
 
-        <div className="text-center mt-8">
+        {/* Google link */}
+        <div className="text-center mt-8 sm:mt-10">
           <a
             href="https://www.google.com/maps/search/NeoBoost+Oradea"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xs text-gray-500 hover:text-gold/70 transition-colors tracking-wide"
+            className="inline-flex items-center gap-2 text-xs text-gray-600 hover:text-gray-400 transition-colors tracking-wide"
           >
-            <GoogleIcon className="w-4 h-4" />
+            <GoogleIcon className="w-3.5 h-3.5" />
             Vezi toate recenziile pe Google
           </a>
         </div>
@@ -90,7 +110,7 @@ function StarIcon({ className }: { className?: string }) {
 
 function GoogleIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <svg className={className} viewBox="0 0 24 24">
       <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
       <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
       <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
