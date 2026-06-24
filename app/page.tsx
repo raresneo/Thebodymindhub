@@ -6,7 +6,7 @@ import { SocialProof } from '@/components/SocialProof'
 import { CABSection } from '@/components/CABSection'
 import { EventDetails } from '@/components/EventDetails'
 import { FAQSection } from '@/components/FAQSection'
-import { LeadFormSection } from '@/components/LeadFormSection'
+import { WhatsAppContact } from '@/components/WhatsAppContact'
 import { Footer } from '@/components/Footer'
 import { StickyCTA } from '@/components/StickyCTA'
 import { SurrealBackground } from '@/components/SurrealBackground'
@@ -24,7 +24,7 @@ export default function Home() {
         <CABSection />
         <EventDetails />
         <FAQSection />
-        <LeadFormSection />
+        <WhatsAppContact />
       </main>
       <Footer />
       <StickyCTA />
