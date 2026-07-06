@@ -203,7 +203,7 @@ export function LeadForm() {
             </div>
 
             <AnimatePresence>
-              {(status === 'error' || (!form.gdpr && errorMsg && status !== 'error')) && (
+              {errorMsg && (
                 <motion.p 
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
