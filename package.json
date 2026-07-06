@@ -8,9 +8,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^8.18.0",
+    "@types/three": "^0.185.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.42.2",
     "next": "14.2.5",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^3.6.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",

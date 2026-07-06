@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface FormData {
   nume: string
@@ -31,7 +32,7 @@ export function LeadForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!form.gdpr) {
-      setErrorMsg('Te rugăm să accepti Politica de confidențialitate pentru a continua.')
+      setErrorMsg('Te rugăm să accepți Politica de confidențialitate.')
       return
     }
     setStatus('loading')
@@ -47,7 +48,7 @@ export function LeadForm() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}))
-        setErrorMsg((data as { error?: string }).error || 'Ceva nu a mers bine. Încearcă din nou.')
+        setErrorMsg((data as { error?: string }).error || 'A apărut o eroare. Încearcă din nou.')
         setStatus('error')
         return
       }
@@ -59,151 +60,184 @@ export function LeadForm() {
     }
   }
 
-  if (status === 'success') {
-    return (
-      <div className="text-center py-10">
-        <div className="w-14 h-14 rounded-full border border-gold/50 flex items-center justify-center mx-auto mb-6">
-          <svg className="w-6 h-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-        <h3 className="font-serif text-2xl text-white mb-3">Locul tău e rezervat!</h3>
-        <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-          Mulțumim! Am primit rezervarea ta, revenim cu detaliile de plată.
-          <br />
-          Ne vedem pe 29 iulie la Merci Bistro!
-        </p>
-        <a
-          href="https://wa.me/40742353586?text=Vreau%20s%C4%83%20particip%20la%20Fit%20f%C4%83r%C4%83%20filtre"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 border border-white/10 text-white px-6 py-3 text-sm hover:border-white/20 hover:bg-white/5 transition-colors"
-        >
-          <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
-          Confirmă și pe WhatsApp
-        </a>
-      </div>
-    )
-  }
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-2">
-            Nume <span className="text-gold">*</span>
-          </label>
-          <input
-            type="text"
-            name="nume"
-            value={form.nume}
-            onChange={handleChange}
-            required
-            placeholder="Popescu"
-            className="w-full bg-[#111] border border-white/10 text-white px-4 py-3 text-sm focus:outline-none focus:border-gold/40 placeholder:text-gray-700 transition-colors"
-          />
-        </div>
-        <div>
-          <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-2">
-            Prenume <span className="text-gold">*</span>
-          </label>
-          <input
-            type="text"
-            name="prenume"
-            value={form.prenume}
-            onChange={handleChange}
-            required
-            placeholder="Maria"
-            className="w-full bg-[#111] border border-white/10 text-white px-4 py-3 text-sm focus:outline-none focus:border-gold/40 placeholder:text-gray-700 transition-colors"
-          />
-        </div>
-      </div>
-
-      <div>
-        <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-2">
-          Email <span className="text-gold">*</span>
-        </label>
-        <input
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          required
-          placeholder="maria@exemplu.com"
-          className="w-full bg-[#111] border border-white/10 text-white px-4 py-3 text-sm focus:outline-none focus:border-gold/40 placeholder:text-gray-700 transition-colors"
-        />
-      </div>
-
-      <div>
-        <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-2">
-          Telefon <span className="text-gold">*</span>
-        </label>
-        <input
-          type="tel"
-          name="telefon"
-          value={form.telefon}
-          onChange={handleChange}
-          required
-          placeholder="07XX XXX XXX"
-          className="w-full bg-[#111] border border-white/10 text-white px-4 py-3 text-sm focus:outline-none focus:border-gold/40 placeholder:text-gray-700 transition-colors"
-        />
-      </div>
-
-      {/* GDPR consent */}
-      <div className="flex items-start gap-3 pt-1">
-        <div className="relative flex-shrink-0 mt-0.5">
-          <input
-            type="checkbox"
-            name="gdpr"
-            id="gdpr"
-            checked={form.gdpr}
-            onChange={handleChange}
-            className="sr-only"
-          />
-          <label
-            htmlFor="gdpr"
-            className={`w-4 h-4 border flex items-center justify-center cursor-pointer transition-colors ${form.gdpr ? 'bg-gold border-gold' : 'bg-transparent border-white/20 hover:border-gold/40'}`}
+    <div className="relative glass-panel rounded-2xl p-6 sm:p-10 border-white/5 bg-black/40 shadow-2xl overflow-hidden">
+      <AnimatePresence mode="wait">
+        {status === 'success' ? (
+          <motion.div
+            key="success"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            className="text-center py-10"
           >
-            {form.gdpr && (
-              <svg className="w-2.5 h-2.5 text-black" viewBox="0 0 10 10" fill="none">
-                <path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <motion.div 
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              className="w-16 h-16 rounded-full border border-gold/50 flex items-center justify-center mx-auto mb-6 shadow-gold-glow"
+            >
+              <svg className="w-8 h-8 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
-            )}
-          </label>
-        </div>
-        <label htmlFor="gdpr" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
-          Am citit și sunt de acord cu{' '}
-          <a
-            href="/politica-de-confidentialitate"
-            target="_blank"
-            className="text-gold/80 hover:text-gold underline underline-offset-2 transition-colors"
+            </motion.div>
+            <h3 className="font-serif text-3xl text-white mb-4">Locul tău e rezervat!</h3>
+            <p className="text-gray-400 text-sm mb-8 leading-relaxed max-w-sm mx-auto">
+              Mulțumim! Am primit rezervarea ta și vom reveni cu detaliile de plată pe email sau WhatsApp.
+              <br /><br />
+              Ne vedem pe 29 iulie la Merci Bistro!
+            </p>
+            <a
+              href="https://wa.me/40742353586?text=Vreau%20s%C4%83%20particip%20la%20Fit%20f%C4%83r%C4%83%20filtre"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 glass-panel-gold text-gold px-8 py-4 text-sm font-semibold uppercase tracking-widest hover:bg-gold/10 transition-colors rounded-sm"
+            >
+              <WhatsAppIcon className="w-5 h-5 text-[#25D366]" />
+              Confirmă pe WhatsApp
+            </a>
+          </motion.div>
+        ) : (
+          <motion.form
+            key="form"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onSubmit={handleSubmit}
+            className="space-y-5"
           >
-            Politica de confidențialitate
-          </a>
-          . Înțeleg că datele mele vor fi folosite exclusiv pentru organizarea evenimentului.{' '}
-          <span className="text-gold">*</span>
-        </label>
-      </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-semibold">
+                  Nume <span className="text-gold">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="nume"
+                  value={form.nume}
+                  onChange={handleChange}
+                  required
+                  placeholder="Popescu"
+                  className="w-full bg-[#0a0a0a] border border-white/10 text-white px-5 py-3.5 text-sm focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 placeholder:text-gray-700 transition-all rounded-sm shadow-inner"
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-semibold">
+                  Prenume <span className="text-gold">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="prenume"
+                  value={form.prenume}
+                  onChange={handleChange}
+                  required
+                  placeholder="Maria"
+                  className="w-full bg-[#0a0a0a] border border-white/10 text-white px-5 py-3.5 text-sm focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 placeholder:text-gray-700 transition-all rounded-sm shadow-inner"
+                />
+              </div>
+            </div>
 
-      {status === 'error' && (
-        <p className="text-red-400 text-sm">{errorMsg}</p>
-      )}
-      {!form.gdpr && errorMsg && status !== 'error' && (
-        <p className="text-red-400 text-sm">{errorMsg}</p>
-      )}
+            <div>
+              <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-semibold">
+                Email <span className="text-gold">*</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                placeholder="maria@exemplu.com"
+                className="w-full bg-[#0a0a0a] border border-white/10 text-white px-5 py-3.5 text-sm focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 placeholder:text-gray-700 transition-all rounded-sm shadow-inner"
+              />
+            </div>
 
-      <button
-        type="submit"
-        disabled={status === 'loading'}
-        className="w-full bg-gold text-black py-4 text-sm font-semibold uppercase tracking-widest hover:bg-gold-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-2"
-      >
-        {status === 'loading' ? 'Se trimite...' : 'Rezervă acum'}
-      </button>
+            <div>
+              <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-semibold">
+                Telefon <span className="text-gold">*</span>
+              </label>
+              <input
+                type="tel"
+                name="telefon"
+                value={form.telefon}
+                onChange={handleChange}
+                required
+                placeholder="07XX XXX XXX"
+                className="w-full bg-[#0a0a0a] border border-white/10 text-white px-5 py-3.5 text-sm focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 placeholder:text-gray-700 transition-all rounded-sm shadow-inner"
+              />
+            </div>
 
-      <p className="text-center text-xs text-gray-600 pt-1">
-        Locuri limitate.
-      </p>
-    </form>
+            {/* GDPR consent */}
+            <div className="flex items-start gap-3 pt-2">
+              <div className="relative flex-shrink-0 mt-0.5">
+                <input
+                  type="checkbox"
+                  name="gdpr"
+                  id="gdpr"
+                  checked={form.gdpr}
+                  onChange={handleChange}
+                  className="sr-only"
+                />
+                <label
+                  htmlFor="gdpr"
+                  className={`w-4 h-4 border flex items-center justify-center cursor-pointer transition-all ${form.gdpr ? 'bg-gold border-gold shadow-gold-glow' : 'bg-[#0a0a0a] border-white/20 hover:border-gold/40'}`}
+                >
+                  {form.gdpr && (
+                    <svg className="w-2.5 h-2.5 text-black" viewBox="0 0 10 10" fill="none">
+                      <path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
+                </label>
+              </div>
+              <label htmlFor="gdpr" className="text-xs text-gray-500 leading-relaxed cursor-pointer font-light">
+                Am citit și sunt de acord cu{' '}
+                <a
+                  href="/politica-de-confidentialitate"
+                  target="_blank"
+                  className="text-gold/80 hover:text-gold underline underline-offset-2 transition-colors font-medium"
+                >
+                  Politica de confidențialitate
+                </a>
+                . Înțeleg că datele mele vor fi folosite exclusiv pentru organizarea evenimentului.
+              </label>
+            </div>
+
+            <AnimatePresence>
+              {(status === 'error' || (!form.gdpr && errorMsg && status !== 'error')) && (
+                <motion.p 
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="text-red-400 text-xs bg-red-400/10 border border-red-400/20 px-3 py-2 rounded-sm"
+                >
+                  {errorMsg}
+                </motion.p>
+              )}
+            </AnimatePresence>
+
+            <button
+              type="submit"
+              disabled={status === 'loading'}
+              className="w-full bg-gold text-dark-900 py-4 text-sm font-bold uppercase tracking-widest hover:bg-gold-light transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-4 shadow-gold-glow hover:shadow-gold-glow-strong hover:-translate-y-0.5 rounded-sm"
+            >
+              {status === 'loading' ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-4 w-4 text-dark-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Se procesează...
+                </span>
+              ) : 'Rezervă acum'}
+            </button>
+
+            <p className="text-center text-xs text-gray-500/70 pt-2 font-light">
+              Doar 30 de locuri disponibile.
+            </p>
+          </motion.form>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }
 

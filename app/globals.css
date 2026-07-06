@@ -3,12 +3,49 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --bg-dark: #050505;
+  }
+  
   html {
     scroll-behavior: smooth;
   }
 
+  body {
+    background-color: var(--bg-dark);
+    color: #FAFAFA;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   input[type='date']::-webkit-calendar-picker-indicator {
     filter: invert(0.4);
+  }
+  
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 55, 0.3);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 175, 55, 0.6);
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-glass;
+  }
+  .glass-panel-gold {
+    @apply bg-gold/5 backdrop-blur-md border border-gold/20 shadow-gold-glow;
+  }
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold-light via-gold to-gold-dark;
   }
 }
 

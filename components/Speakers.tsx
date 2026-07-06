@@ -2,10 +2,11 @@
 
 import Image from 'next/image'
 import { useRef, useState } from 'react'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
 const speakers = [
   {
-    name: 'Rareș Pantis',
+    name: 'Rareș Pantiș',
     role: 'Fondator NeoBoost · Specialist mișcare & recuperare',
     bio: 'Masterand în balneofizio-kinetoterapie, cu peste 13 ani de practică sportivă și 10 ani de antreprenoriat. A construit NeoBoost și a transformat sute de oameni prin metode bazate pe știință, nu pe trenduri. Pe scenă demontează miturile fitness și îți arată cum arată schimbarea reală a corpului.',
     image: '/images/rares.jpg',
@@ -32,21 +33,41 @@ const speakers = [
 
 export function Speakers() {
   return (
-    <section className="py-16 sm:py-24 px-5 sm:px-6 border-t border-white/5">
+    <section className="py-20 sm:py-32 px-6 border-t border-white/5 relative">
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+      
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-10 sm:mb-16">
-          <p className="text-xs uppercase tracking-[0.3em] text-gold/70 mb-4">Cine ești pe scenă</p>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-white mb-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16 sm:mb-24"
+        >
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="h-[1px] w-8 bg-gold/50" />
+            <p className="text-xs uppercase tracking-[0.3em] text-gold/80 font-medium">Cine ești pe scenă</p>
+            <div className="h-[1px] w-8 bg-gold/50" />
+          </div>
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white mb-6 tracking-tight drop-shadow-md">
             Specialiștii serii
           </h2>
-          <p className="text-gray-400 max-w-xl mx-auto text-sm leading-relaxed">
+          <p className="text-gray-400 max-w-xl mx-auto text-base sm:text-lg leading-relaxed font-light">
             Nu influenceri. Nu motivatori de weekend. Oameni cu ani de practică reală în spatele fiecărui cuvânt.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6">
-          {speakers.map((speaker) => (
-            <SpeakerCard key={speaker.name} speaker={speaker} />
+        <div className="grid md:grid-cols-3 gap-8 sm:gap-10">
+          {speakers.map((speaker, index) => (
+            <motion.div
+              key={speaker.name}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
+            >
+              <SpeakerCard speaker={speaker} />
+            </motion.div>
           ))}
         </div>
       </div>
@@ -56,50 +77,79 @@ export function Speakers() {
 
 function SpeakerCard({ speaker }: { speaker: typeof speakers[0] }) {
   const cardRef = useRef<HTMLDivElement>(null)
+  
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  
+  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 })
+  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 })
+  
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"])
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"])
 
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = cardRef.current
-    if (!el) return
-    const r = el.getBoundingClientRect()
-    const x = ((e.clientX - r.left) / r.width  - 0.5) * 2
-    const y = ((e.clientY - r.top)  / r.height - 0.5) * 2
-    el.style.transition = 'transform 0.08s linear, border-color 0.3s ease'
-    el.style.transform  = `perspective(900px) rotateY(${x * 9}deg) rotateX(${-y * 9}deg) translateZ(14px)`
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    
+    const width = rect.width
+    const height = rect.height
+    
+    const mouseX = e.clientX - rect.left
+    const mouseY = e.clientY - rect.top
+    
+    const xPct = mouseX / width - 0.5
+    const yPct = mouseY / height - 0.5
+    
+    x.set(xPct)
+    y.set(yPct)
   }
 
-  const onLeave = () => {
-    const el = cardRef.current
-    if (!el) return
-    el.style.transition = 'transform 0.55s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.3s ease'
-    el.style.transform  = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateZ(0px)'
+  const handleMouseLeave = () => {
+    x.set(0)
+    y.set(0)
   }
 
   return (
-    <div
+    <motion.div
       ref={cardRef}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      className="group border border-white/8 hover:border-gold/25 overflow-hidden"
-      style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      className="group relative h-full flex flex-col glass-panel rounded-2xl overflow-hidden hover:shadow-gold-glow-strong transition-shadow duration-500 border border-white/10 hover:border-gold/30 bg-[#0a0a0a]"
     >
+      <div 
+        className="absolute inset-0 bg-gradient-to-br from-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{ transform: "translateZ(1px)" }}
+      />
+      
       {/* Photo */}
-      <div className="relative aspect-[4/5] bg-[#111] overflow-hidden">
+      <div 
+        className="relative aspect-[4/5] bg-dark-900 overflow-hidden rounded-t-2xl"
+        style={{ transform: "translateZ(20px)" }}
+      >
         <SpeakerImage speaker={speaker} />
         {/* Pillar badge */}
-        <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm border border-gold/30 px-3 py-1 z-10">
-          <span className="text-[10px] uppercase tracking-widest text-gold">{speaker.pillar}</span>
+        <div className="absolute top-5 left-5 glass-panel-gold px-4 py-1.5 rounded-full z-10 border border-gold/40">
+          <span className="text-[10px] uppercase tracking-[0.2em] text-gold font-medium">{speaker.pillar}</span>
         </div>
         {/* Bottom fade — blends photo into card */}
-        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0f0f0f] to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
       </div>
 
       {/* Info */}
-      <div className="p-5 sm:p-6 bg-[#0f0f0f]">
-        <h3 className="font-serif text-2xl sm:text-xl text-white mb-1">{speaker.name}</h3>
-        <p className="text-gold text-xs uppercase tracking-wide mb-3">{speaker.role}</p>
-        <p className="text-gray-300 sm:text-gray-400 text-[15px] sm:text-sm leading-relaxed">{speaker.bio}</p>
+      <div 
+        className="p-6 sm:p-8 flex-1 flex flex-col justify-start relative z-20 bg-[#0a0a0a]"
+        style={{ transform: "translateZ(30px)" }}
+      >
+        <h3 className="font-serif text-2xl sm:text-3xl text-white mb-2 group-hover:text-gold transition-colors duration-300">{speaker.name}</h3>
+        <p className="text-gold/80 text-[11px] sm:text-xs uppercase tracking-[0.15em] mb-4 font-semibold">{speaker.role}</p>
+        <p className="text-gray-400 text-sm leading-relaxed font-light flex-1">{speaker.bio}</p>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
@@ -111,7 +161,7 @@ function SpeakerImage({ speaker }: { speaker: typeof speakers[0] }) {
       src={speaker.image}
       alt={`${speaker.name} — ${speaker.role}`}
       fill
-      className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
+      className="object-cover object-top filter grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
       sizes="(max-width: 768px) 100vw, 33vw"
       onError={() => setFailed(true)}
     />
@@ -120,9 +170,9 @@ function SpeakerImage({ speaker }: { speaker: typeof speakers[0] }) {
 
 function SpeakerAvatar({ initials }: { initials: string }) {
   return (
-    <div className="w-full h-full flex items-center justify-center bg-[#0f0f0f]">
-      <div className="w-24 h-24 rounded-full border border-gold/20 flex items-center justify-center">
-        <span className="font-serif text-3xl text-gold/40">{initials}</span>
+    <div className="w-full h-full flex items-center justify-center bg-dark-800">
+      <div className="w-28 h-28 rounded-full border border-gold/20 flex items-center justify-center shadow-inner">
+        <span className="font-serif text-4xl text-gold/30">{initials}</span>
       </div>
     </div>
   )
