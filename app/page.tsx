@@ -5,6 +5,7 @@ import { Speakers } from '@/components/Speakers'
 import { WhyAttend } from '@/components/WhyAttend'
 import { Agenda } from '@/components/Agenda'
 import { LocationMap } from '@/components/LocationMap'
+import { LuminaApp } from '@/components/LuminaApp'
 import { SocialProof } from '@/components/SocialProof'
 import { CABSection } from '@/components/CABSection'
 import { EventDetails } from '@/components/EventDetails'
@@ -24,6 +25,7 @@ export default function Home() {
         <Speakers />
         <Agenda />
         <LocationMap />
+        <LuminaApp />
         <SocialProof />
         <CABSection />
         <EventDetails />
