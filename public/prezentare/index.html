@@ -748,11 +748,6 @@ body.overview-mode .deck {
 <section class="slide final" id="slide-45">
   <h1 class="reveal-scale d2">Deja ești suficient.</h1>
 </section>
-<section class="slide lumina" id="slide-46">
-  <h1 class="reveal-blur d1">Lumina</h1>
-  <div class="piloni reveal d3">Corp · Nutriție · Meditație · Jurnal</div>
-  <div class="privat reveal d4">Jurnal privat. Nu vede nimeni nimic.</div>
-</section>
 <section class="slide liniste" id="slide-47" style="background: linear-gradient(rgba(20, 16, 13, 0.3), rgba(20, 16, 13, 0.8)), url('/prezentare/bg_tombola.jpg') center/cover no-repeat;">
   <span class="eyebrow reveal d1">Și acum</span>
   <h1 class="reveal-scale d2" style="margin-bottom: 20px;">Tombola.</h1>
@@ -873,7 +868,8 @@ body.overview-mode .deck {
   </div>
 </section>
 
-<section class="slide" id="slide-47-a2">
+
+<section class="slide" id="slide-lumina-1">
   <span class="eyebrow reveal d1">De unde a pornit Lumina</span>
   <h2 class="reveal d2">Totul a început personal.</h2>
   <div class="ce reveal d3" style="margin-top: 2rem; max-width: 60vw;">
@@ -890,13 +886,17 @@ body.overview-mode .deck {
     </div>
   </div>
   <div class="reveal d4" style="position: absolute; right: 120px; bottom: 120px; text-align: center;">
-    <img src="https://avatars.githubusercontent.com/u/219466567?v=4" alt="Rares Pantis" style="width: 250px; height: 250px; object-fit: cover; border-radius: 50%; border: 4px solid var(--accent); margin-bottom: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+    <img src="/prezentare/rares_nou.png" alt="Rares Pantis" style="width: 250px; height: 250px; object-fit: cover; border-radius: 50%; border: 4px solid var(--accent); margin-bottom: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
     <div style="font-family: var(--font-serif); font-size: 24px;">Rareș Pantiș</div>
     <div style="color: var(--accent); font-size: 14px; text-transform: uppercase; letter-spacing: 2px;">Fondator Lumina</div>
   </div>
 </section>
-
-<section class="slide" id="slide-47-b">
+<section class="slide lumina" id="slide-lumina-2">
+  <h1 class="reveal-blur d1">Lumina</h1>
+  <div class="piloni reveal d3">Corp · Nutriție · Meditație · Jurnal</div>
+  <div class="privat reveal d4">Jurnal privat. Nu vede nimeni nimic.</div>
+</section>
+<section class="slide" id="slide-lumina-3">
   <span class="eyebrow reveal d1">Lumina.app susține mișcarea noastră</span>
   <h2 class="reveal d2">Tot ecosistemul într-un singur loc.</h2>
   <div class="ce reveal d3" style="margin-top: 2rem; max-width: 55vw;">
@@ -908,13 +908,112 @@ body.overview-mode .deck {
     </ul>
     Aplicația care închide cercul și pune în practică tot ce am vorbit azi.
   </div>
-  <img src="/prezentare/lumina_dashboard.jpg" alt="Lumina Dashboard" class="reveal d4" style="position: absolute; right: 0; bottom: 0; height: 75vh; border-top-left-radius: 20px; box-shadow: -10px -10px 50px rgba(0,0,0,0.5);">
+
+  <div class="lumina-ui reveal d4" style="position: absolute; right: 0; bottom: 0; width: 750px; height: 75vh; background: #000; border-top-left-radius: 20px; box-shadow: -10px -10px 50px rgba(0,0,0,0.5); display: flex; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 16px;">
+    <aside style="width: 220px; background: #0a0a0a; border-right: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; padding: 20px;">
+      <div style="font-weight: bold; font-size: 20px; margin-bottom: 30px; display: flex; align-items: center; gap: 10px;">
+        <div style="width: 24px; height: 24px; background: var(--accent); border-radius: 4px;"></div> Lumina
+      </div>
+      
+      <div style="font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px;">Spațiul meu</div>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px;">
+        <div style="padding: 8px 12px; background: rgba(255,255,255,0.1); border-radius: 6px; display: flex; align-items: center; gap: 10px;">📅 Astăzi</div>
+        <div style="padding: 8px 12px; display: flex; align-items: center; gap: 10px; opacity: 0.7;">💪 Body</div>
+        <div style="padding: 8px 12px; display: flex; align-items: center; gap: 10px; opacity: 0.7;">🧠 Mind</div>
+        <div style="padding: 8px 12px; display: flex; align-items: center; gap: 10px; opacity: 0.7;">🥗 Fuel</div>
+      </div>
+      
+      <div style="font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-top: 30px; margin-bottom: 15px;">Explorează Mind</div>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; opacity: 0.5;">
+        <div>✨ Whiteboard</div>
+        <div>🌬 Meditație</div>
+        <div>🧠 Luca</div>
+        <div>💡 Perspective</div>
+        <div>🕸 Graph View</div>
+      </div>
+    </aside>
+    
+    <main style="flex: 1; padding: 30px; display: flex; flex-direction: column; background: #111;">
+      <header style="margin-bottom: 25px;">
+        <h1 style="font-size: 24px; margin: 0 0 5px 0; font-family: -apple-system, sans-serif;">Astăzi</h1>
+        <p style="color: rgba(255,255,255,0.5); font-size: 14px; margin: 0;">Roadmap-ul tău pentru azi</p>
+      </header>
+      
+      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; flex: 1; min-width: 200px;">
+          <h3 style="font-size: 15px; margin: 0 0 15px 0; color: var(--accent);">Obiceiuri</h3>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div style="width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--accent); background: var(--accent);"></div>
+            <span style="font-size: 14px;">Meditație 10 min</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3);"></div>
+            <span style="opacity: 0.7; font-size: 14px;">Antrenament</span>
+          </div>
+        </div>
+        
+        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; flex: 1; min-width: 200px;">
+          <h3 style="font-size: 15px; margin: 0 0 10px 0; color: #4ade80;">Jurnal</h3>
+          <p style="opacity: 0.7; font-size: 13px; margin-bottom: 15px;">"Azi m-am trezit cu mai multă energie după..."</p>
+          <button style="background: rgba(255,255,255,0.1); border: none; padding: 6px 12px; border-radius: 6px; color: white; font-size: 12px;">Scrie în jurnal</button>
+        </div>
+      </div>
+      
+      <div style="margin-top: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; flex: 1;">
+        <h3 style="font-size: 15px; margin: 0 0 15px 0;">Evoluție & Corelații</h3>
+        <div style="display: flex; align-items: center; justify-content: center; height: calc(100% - 30px); opacity: 0.3;">
+          <div style="width: 100px; height: 100px; border-radius: 50%; border: 2px dashed white; display: flex; align-items: center; justify-content: center; font-size: 12px;">Graph View</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
 </section>
-<section class="slide" id="slide-47-c">
+<section class="slide" id="slide-lumina-4">
   <span class="eyebrow reveal d1">Lumina.app</span>
   <h2 class="reveal d2">Specialistul, direct din aplicație.</h2>
   <div class="ce reveal d3" style="margin-top: 2rem; max-width: 60vw;">Te conectăm automat cu terapeuți, antrenori și nutriționiști în funcție de evoluția ta.<br><br><em>Am început deja să lucrăm la acest proiect.</em></div>
-  <img src="/prezentare/lumina_connect.jpg" alt="Lumina Connect" class="reveal d4" style="position: absolute; right: 0; bottom: 0; height: 75vh; border-top-left-radius: 20px; box-shadow: -10px -10px 50px rgba(0,0,0,0.5);">
+
+  <div class="lumina-ui reveal d4" style="position: absolute; right: 0; bottom: 0; width: 750px; height: 75vh; background: #000; border-top-left-radius: 20px; box-shadow: -10px -10px 50px rgba(0,0,0,0.5); display: flex; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <main style="flex: 1; padding: 40px; display: flex; flex-direction: column; background: #111;">
+      <header style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h1 style="font-size: 26px; margin: 0 0 5px 0; font-family: -apple-system, sans-serif;">Specialiștii tăi</h1>
+          <p style="color: rgba(255,255,255,0.5); font-size: 15px; margin: 0;">Conectează-te cu echipa The Body Mind Hub</p>
+        </div>
+        <button style="background: var(--accent); color: black; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; font-size: 14px;">+ Adaugă</button>
+      </header>
+      
+      <div style="display: flex; flex-direction: column; gap: 15px;">
+        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 20px;">
+          <img src="/prezentare/cristina.png" style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover;">
+          <div style="flex: 1;">
+            <h3 style="margin: 0 0 5px 0; font-size: 17px; font-family: -apple-system, sans-serif;">Cristina Cecan</h3>
+            <p style="margin: 0; color: rgba(255,255,255,0.5); font-size: 13px;">Psiholog Clinician · Are acces la: Mind, Jurnal</p>
+          </div>
+          <button style="background: rgba(255,255,255,0.1); border: none; padding: 6px 14px; border-radius: 6px; color: white; font-size: 13px;">Trimite mesaj</button>
+        </div>
+        
+        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 20px;">
+          <img src="/prezentare/rares_nou.png" style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover;">
+          <div style="flex: 1;">
+            <h3 style="margin: 0 0 5px 0; font-size: 17px; font-family: -apple-system, sans-serif;">Rareș Pantiș</h3>
+            <p style="margin: 0; color: rgba(255,255,255,0.5); font-size: 13px;">Antrenor · Are acces la: Body, Fuel</p>
+          </div>
+          <button style="background: rgba(255,255,255,0.1); border: none; padding: 6px 14px; border-radius: 6px; color: white; font-size: 13px;">Trimite mesaj</button>
+        </div>
+        
+        <div style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 20px; opacity: 0.6;">
+          <div style="width: 55px; height: 55px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 24px;">+</div>
+          <div style="flex: 1;">
+            <h3 style="margin: 0 0 5px 0; font-size: 17px; font-family: -apple-system, sans-serif;">Nutriționist (În curând)</h3>
+            <p style="margin: 0; color: rgba(255,255,255,0.5); font-size: 13px;">Ai nevoie de ajutor cu alimentația?</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
 </section>
 <section class="slide poster" id="slide-48">
   <h1 class="reveal d1">Mulțumim că<br>ați fost <em>aici</em>.</h1>
