@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Fit Fără Filtre - The Body Mind Hub. Prezentare eveniment live.">
+<meta property="og:title" content="Fit Fără Filtre">
+<meta property="og:description" content="O abordare sinceră și transparentă despre fitness, mindset și nutriție.">
+<title>Fit Fara Filtre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --background: #14100d;
+  --foreground: #F5F0E8;
+  --accent: #D4A857;
+  --muted-foreground: #9a9187;
+  --border: color-mix(in srgb, var(--accent) 22%, transparent);
+  --green: #1F3D34;
+  --font-display: 'Cormorant', serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+}
+
+body, html {
+  margin: 0; padding: 0;
+  width: 100vw; height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Film grain and vignette */
+body::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: 
+    radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.5) 100%),
+    url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: multiply;
+}
+
+.deck {
+  width: 1920px;
+  height: 1080px;
+  position: absolute;
+  top: 0; left: 0;
+  transform-origin: 0 0;
+}
+
+/* Slide viewport scaling */
+.slide {
+  position: absolute;
+  width: 1920px;
+  height: 1080px;
+  background: transparent;
+  padding: 120px 140px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: scale(0.96);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+  z-index: 10;
+}
+
+/* Botanical green mist in corners */
+.slide::before, .slide::after {
+  content: "";
+  position: absolute;
+  filter: blur(140px);
+  pointer-events: none;
+  z-index: 0;
+}
+.slide::before {
+  top: -200px; left: -200px;
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--green) 35%, transparent), transparent 70%);
+}
+.slide::after {
+  bottom: -200px; right: -200px;
+  width: 900px; height: 900px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--green) 30%, transparent), transparent 70%);
+}
+
+.slide > * { position: relative; z-index: 2; }
+
+/* Typography */
+h1, h2, h3, .titlu h1, .poster h1, .dramatic .taiat, .cifre .mare, .unmit .mare, .final h1, .lumina h1, .rv .nume, .sinteza .cine, .jurnal .cutie .k, .lista .item .n {
+  font-family: var(--font-display);
+  font-weight: 300;
+  margin: 0;
+}
+
+/* Large text refinements */
+h1 { font-size: 140px; line-height: 1.05; letter-spacing: -0.04em; }
+h2 { font-size: 72px; line-height: 1.1; letter-spacing: -0.02em; }
+h3 { font-size: 48px; line-height: 1.2; letter-spacing: -0.01em; }
+p, li { font-size: 42px; line-height: 1.5; color: color-mix(in srgb, var(--foreground) 90%, transparent); font-weight: 300; margin: 0; }
+em { font-style: italic; color: var(--accent); }
+ul { margin: 0; padding-left: 40px; }
+
+/* Halation */
+.gold, .accent, em, .mit .adevar, .rv .nume, .reco .r .b, .cifre .mare, .cuvinte .c, .unmit .mare, .liniste h1, .final h1, .lumina h1, .sinteza .cine {
+  text-shadow: 0 0 40px color-mix(in srgb, var(--accent) 12%, transparent), 0 0 100px color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+.eyebrow { 
+  font-size: 24px; font-weight: 400; letter-spacing: 0.35em; 
+  text-transform: uppercase; color: var(--accent); 
+}
+
+/* Animations */
+.reveal, .reveal-blur, .reveal-scale, .step {
+  opacity: 0;
+}
+
+.slide.active .reveal {
+  animation: fade-up 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.slide.active .reveal-blur {
+  animation: blur-in 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.slide.active .reveal-scale {
+  animation: scale-up 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.slide.active .step {
+  animation: fade-up 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes fade-up {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes blur-in {
+  0% { opacity: 0; filter: blur(20px); transform: scale(1.05); }
+  100% { opacity: 1; filter: blur(0); transform: scale(1); }
+}
+@keyframes scale-up {
+  0% { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.tree-line { transform-origin: left; transform: scaleX(0); }
+.slide.active .tree-line { animation: grow-line 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.8s forwards; }
+@keyframes grow-line { 0% { transform: scaleX(0); opacity: 0; } 100% { transform: scaleX(1); opacity: 1; } }
+
+.d1 { animation-delay: 0.2s !important; }
+.d2 { animation-delay: 0.4s !important; }
+.d3 { animation-delay: 0.6s !important; }
+.d4 { animation-delay: 0.8s !important; }
+.d5 { animation-delay: 1.0s !important; }
+.d6 { animation-delay: 1.2s !important; }
+.d7 { animation-delay: 1.4s !important; }
+.d8 { animation-delay: 1.6s !important; }
+.slide.active .step:nth-child(1) { animation-delay: 0.3s; }
+.slide.active .step:nth-child(2) { animation-delay: 0.5s; }
+.slide.active .step:nth-child(3) { animation-delay: 0.7s; }
+.slide.active .step:nth-child(4) { animation-delay: 0.9s; }
+.slide.active .step:nth-child(5) { animation-delay: 1.1s; }
+
+/* Specific Layouts */
+
+/* 1. Titlu */
+.titlu { justify-content: space-between; align-items: flex-start; padding: 160px; }
+.titlu h1 { font-size: 200px; line-height: 0.95; }
+.titlu h1 .gold { color: var(--accent); font-style: italic; display: block; }
+.titlu .jos { display: flex; align-items: flex-end; justify-content: space-between; width: 100%; margin-top: auto; }
+.titlu .meta { font-size: 26px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-foreground); }
+
+/* 2. Speaker Photos (Full-bleed) */
+.foto { padding: 0 !important; }
+.foto::before, .foto::after { display: none; }
+.foto img {
+  width: 1920px; height: 1080px; object-fit: cover; object-position: center 20%;
+  transform: scale(1.05);
+}
+.slide.active.foto img {
+  animation: photo-in 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes photo-in {
+  0% { transform: scale(1.08); opacity: 0; filter: saturate(0.7) contrast(1.1); }
+  100% { transform: scale(1); opacity: 1; filter: saturate(1) contrast(1); }
+}
+
+/* 3. Mituri (Myth slides) */
+.mit { gap: 100px; align-items: center; text-align: center; justify-content: center; }
+.mit .fals { font-family: var(--font-display); font-size: 80px; line-height: 1.15; color: var(--muted-foreground); position: relative; display: inline-block; max-width: 1400px; }
+.mit .fals::after {
+  content: ""; position: absolute; left: -20px; right: -20px; top: 50%; height: 3px;
+  background: var(--accent); transform-origin: left center; transform: scaleX(0);
+}
+.slide.active .mit .fals::after {
+  animation: taie 1s cubic-bezier(0.25, 1, 0.5, 1) 0.8s forwards;
+}
+.mit .adevar { font-size: 110px; line-height: 1.1; color: var(--accent); max-width: 1520px; }
+
+@keyframes taie { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+
+/* 4. SVGs */
+.grafic { align-items: center; justify-content: center; }
+.grafic h2 { margin-bottom: 40px; }
+.plansa { position: relative; width: 1600px; height: 600px; margin: 0 auto; }
+.plansa svg { width: 100%; height: 100%; overflow: visible; }
+.traseu { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; }
+.traseu.doi { stroke: color-mix(in srgb, var(--accent) 50%, var(--foreground)); }
+.desen { stroke-dasharray: 3000; stroke-dashoffset: 3000; }
+.slide.active .desen {
+  animation: deseneaza 3s cubic-bezier(0.25, 1, 0.3, 1) forwards;
+}
+.slide.active .desen.b { animation-delay: 1.2s; }
+@keyframes deseneaza { 100% { stroke-dashoffset: 0; } }
+.eticheta { font-family: var(--font-body); font-size: 26px; fill: var(--foreground); }
+.axa { font-family: var(--font-body); font-size: 22px; fill: var(--muted-foreground); }
+.zdesert { fill: color-mix(in srgb, var(--accent) 7%, transparent); }
+.tdesert { font-family: var(--font-display); font-size: 64px; fill: var(--accent); letter-spacing: 0.3em; opacity: 0.8; }
+
+/* Other variations */
+.poster { align-items: center; text-align: center; }
+.poster h1 { font-size: 160px; max-width: 1520px; }
+.poster img.marca { margin-top: 80px; height: 150px; }
+
+.reco { align-items: flex-end; text-align: right; padding-right: 180px; }
+.reco h2 { margin-bottom: 80px; }
+.reco .r { display: flex; align-items: baseline; gap: 40px; margin-bottom: 50px; flex-direction: row-reverse; }
+.reco .r .b { color: var(--accent); font-size: 42px; }
+.reco .r .t { font-size: 48px; max-width: 1350px; }
+
+.sinteza { align-items: center; }
+.sinteza > .eyebrow { margin-bottom: 80px; }
+.sinteza .linie { display: flex; gap: 60px; align-items: baseline; margin-bottom: 70px; border-bottom: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent); padding-bottom: 40px; }
+.sinteza .cine { font-size: 64px; color: var(--accent); min-width: 280px; text-align: right; }
+.sinteza .zice { font-size: 44px; max-width: 1100px; font-weight: 300; }
+
+.jurnal { align-items: center; }
+.jurnal .cutii { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-top: 60px; }
+.jurnal .cutie { border: 1px solid var(--border); padding: 60px; background: color-mix(in srgb, var(--accent) 3%, transparent); border-radius: 4px; }
+.jurnal .cutie .k { font-size: 56px; color: var(--accent); }
+.jurnal .cutie .d { font-size: 32px; color: var(--muted-foreground); margin-top: 20px; }
+
+.cifre { align-items: center; text-align: center; }
+.cifre .pereche { display: flex; align-items: center; gap: 180px; }
+.cifre .mic { font-size: 260px; line-height: 1; color: color-mix(in srgb, var(--foreground) 15%, transparent); position: relative; }
+.cifre .mic::after {
+  content: ""; position: absolute; left: -20px; right: -20px; top: 50%; height: 5px; background: color-mix(in srgb, var(--foreground) 35%, transparent); transform: rotate(-12deg) scaleX(0); transform-origin: left center;
+}
+.slide.active .cifre .mic::after {
+  animation: taie 1s cubic-bezier(0.25, 1, 0.5, 1) 1.2s forwards;
+}
+.cifre .mare { font-size: 440px; color: var(--accent); }
+.cifre .zile { font-size: 40px; letter-spacing: 0.35em; color: var(--muted-foreground); margin-top: 40px; text-transform: uppercase;}
+
+.cuvinte { align-items: flex-start; justify-content: center; padding-left: 200px; }
+.cuvinte .c { font-size: 160px; line-height: 1.15; color: var(--accent); }
+
+.unmit { align-items: center; text-align: center; }
+.unmit .mare { font-size: 180px; color: var(--accent); line-height: 1; }
+.unmit p { font-size: 44px; color: var(--foreground); max-width: 1250px; margin-top: 60px; }
+
+.piese { align-items: center; justify-content: center; }
+.piese .item { display: flex; align-items: baseline; gap: 50px; margin-bottom: 50px; }
+.piese .item .nr { font-family: var(--font-display); font-size: 72px; color: var(--accent); min-width: 80px; line-height: 1; }
+.piese .item .txt { font-family: var(--font-display); font-size: 72px; line-height: 1; }
+
+.liniste { align-items: center; text-align: center; }
+.liniste h1 { font-size: 160px; color: var(--accent); }
+.liniste p { font-size: 44px; color: var(--muted-foreground); margin-top: 50px; max-width: 1250px; }
+
+.final { align-items: center; text-align: center; }
+.final h1 { font-size: 180px; color: var(--accent); font-style: italic; }
+.final::before { 
+  content: ""; position: absolute; top: 50%; left: 50%; width: 1400px; height: 1400px; 
+  transform: translate(-50%, -50%); 
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 15%, transparent), transparent 66%); 
+  border-radius: 50%; filter: blur(30px); pointer-events: none; 
+  animation: respira 8s ease-in-out infinite; z-index: 0; 
+}
+@keyframes respira { 
+  0%, 100% { opacity: 0.45; transform: translate(-50%, -50%) scale(0.92); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+.lumina { align-items: center; text-align: center; gap: 60px; }
+.lumina h1 { font-size: 160px; color: var(--accent); font-style: italic; }
+.lumina .piloni { font-size: 44px; letter-spacing: 0.1em; }
+.lumina .privat { font-size: 32px; color: var(--muted-foreground); letter-spacing: 0.08em; }
+
+.negru { background: #080604; align-items: center; text-align: center; }
+.negru::before, .negru::after { display: none; }
+.negru .marcaj { font-size: 28px; letter-spacing: 0.35em; text-transform: uppercase; color: color-mix(in srgb, var(--accent) 38%, transparent); }
+.negru .ce { font-family: var(--font-display); font-size: 72px; color: color-mix(in srgb, var(--foreground) 52%, transparent); margin-top: 50px; max-width: 1300px; }
+
+.vorbitori { padding-left: 200px; }
+.vorbitori h2 { margin-bottom: 80px; }
+.rv { margin-bottom: 60px; }
+.rv .nume { font-size: 80px; color: var(--accent); line-height: 1; }
+.rv .rol { font-size: 36px; color: var(--muted-foreground); margin-top: 12px; }
+
+.sponsori { align-items: center; text-align: center; }
+.sponsori h2 { margin-bottom: 40px; }
+.grid-s { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50px 40px; margin-top: 60px; }
+.grid-s .s { border: 1px solid var(--border); padding: 50px 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; min-height: 180px; }
+.grid-s .s .nm { font-family: var(--font-display); font-size: 40px; color: var(--accent); line-height: 1.1; }
+.grid-s .s .zn { font-size: 24px; color: var(--muted-foreground); letter-spacing: 0.05em; }
+
+.dramatic { align-items: center; text-align: center; }
+.dramatic .taiat { font-size: 140px; line-height: 1.1; position: relative; display: inline-block; max-width: 1500px; }
+.dramatic .taiat::after {
+  content: ""; position: absolute; left: -24px; right: -24px; top: 50%; height: 5px; background: var(--accent); transform-origin: left center; transform: scaleX(0);
+}
+.slide.active .dramatic .taiat::after { animation: taie 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.2s forwards; }
+
+.lista { display: flex; flex-direction: column; gap: 40px; margin-top: 60px; }
+.lista .item { display: flex; align-items: baseline; gap: 40px; }
+.lista .item .n { font-size: 40px; color: var(--accent); min-width: 60px; }
+.lista .item .t { font-size: 44px; }
+.lista .item .v { font-size: 32px; color: var(--muted-foreground); margin-left: auto; text-align: right; }
+.nota { font-size: 30px; color: var(--muted-foreground); margin-top: 70px; letter-spacing: 0.03em; }
+
+.lipsa { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; border: 1px dashed var(--border); font-size: 28px; letter-spacing: 0.2em; text-transform: uppercase; color: color-mix(in srgb, var(--accent) 55%, transparent); z-index: -1; }
+
+.nav-dots { display: none; } /* hiding internal nav dots */
+
+/* FILLABLE FORMS */
+.fillable-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+.fillable-form label {
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: bold;
+  margin-bottom: -5px;
+}
+.fillable-form input, .fillable-form textarea {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 15px 20px;
+  color: white;
+  font-family: inherit;
+  font-size: 22px;
+  transition: all 0.3s;
+}
+.fillable-form input:focus, .fillable-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+.fillable-form textarea {
+  resize: none;
+  height: 90px;
+}
+body.overview-mode .fillable-form {
+  pointer-events: none;
+}
+
+/* SIDEBAR OVERVIEW MODE */
+#slide-sidebar {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 320px;
+  background: #080808;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  overflow-y: auto;
+  z-index: 10000;
+  padding: 20px;
+  flex-direction: column;
+  gap: 20px;
+}
+#slide-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+#slide-sidebar::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+body.overview-mode {
+  background: #000;
+}
+body.overview-mode #slide-sidebar {
+  display: flex;
+}
+body.overview-mode .deck {
+  /* margin and scaling handled by JS translate/scale */
+}
+
+.slide-thumb {
+  position: relative;
+  width: 280px;
+  height: 157.5px;
+  background: #000;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 3px solid transparent;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+.slide-thumb:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+.slide-thumb.active-thumb {
+  border-color: white;
+  box-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
+.slide-thumb.speaker-rares::after { content: ''; position: absolute; inset: 0; border: 4px solid #D4AF37; pointer-events: none; border-radius: 4px; z-index: 999; }
+.slide-thumb.speaker-claudia::after { content: ''; position: absolute; inset: 0; border: 4px solid #5BC0EB; pointer-events: none; border-radius: 4px; z-index: 999; }
+.slide-thumb.speaker-cristina::after { content: ''; position: absolute; inset: 0; border: 4px solid #9BC53D; pointer-events: none; border-radius: 4px; z-index: 999; }
+
+.thumb-clone {
+  position: absolute !important;
+  top: 0 !important; left: 0 !important;
+  width: 1920px !important; height: 1080px !important;
+  transform: scale(0.145833) !important;
+  transform-origin: 0 0 !important;
+  pointer-events: none !important;
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+  margin: 0 !important;
+  z-index: 1 !important;
+  visibility: visible !important;
+}
+.thumb-clone * {
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Grid Toggle Button */
+#overview-toggle {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10000;
+  transition: all 0.3s ease;
+}
+#overview-toggle:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.1);
+}
+</style>
+</head>
+<body>
+<main class="deck">
+<section class="slide titlu" id="slide-1" style="background: linear-gradient(rgba(20, 16, 13, 0.3), rgba(20, 16, 13, 0.7)), url('bg_title.jpg') center/cover no-repeat;">
+  <span class="eyebrow reveal d1">The Body Mind Hub prezintă</span>
+  <h1 class="reveal d2"><span>Fit</span><span>fără</span><span class="gold">filtre</span></h1>
+  <div class="jos">
+    <div class="meta reveal d4">29 iulie 2026 · Merci Bistro · Oradea</div>
+    <img class="marca reveal d5" src="logo.png" alt="The Body Mind Hub" style="height: 140px; width: auto; border-radius: 50%; display: block; margin: 0 auto;">
+  </div>
+</section>
+<section class="slide foto" id="slide-1a">
+  <div class="lipsa">rares.png</div>
+  <img src="rares.png" alt="Eu sunt Rareș · antrenor și antreprenor">
+</section>
+<section class="slide poster" id="slide-2">
+  <span class="eyebrow reveal d1">De ce suntem aici</span>
+  <h1 class="reveal-blur d2">Povestea pe care<br>ne-o <em>spunem</em>.</h1>
+  <p class="reveal d4" style="margin-top: 2rem; font-style: italic; max-width: 75vw; color: color-mix(in srgb, var(--foreground) 70%, transparent);">„Nu am suficientă motivație, sunt prea leneș sau nu mă pot ține din cauza...”</p>
+</section>
+<section class="slide vorbitori" id="slide-3">
+  <h2 class="reveal d1">Trei oameni. Trei bucăți din același răspuns.</h2>
+  <div style="display: flex; flex-direction: column; gap: 70px; margin-top: 80px; width: 100%;">
+    
+    <div class="rv step" style="display: flex; align-items: center; gap: 40px; width: 100%;">
+      <div style="width: 25%; flex-shrink: 0;">
+        <div class="nume">Claudia</div>
+        <div class="rol">ce se întâmplă în mintea noastră</div>
+      </div>
+      <div class="tree-line" style="flex-grow: 1; height: 2px; background: color-mix(in srgb, var(--accent) 40%, transparent);"></div>
+      <div style="text-align: right; color: var(--muted-foreground); font-size: 38px; line-height: 1.4; flex-shrink: 0;">
+        <span style="text-decoration: line-through; color: #555;">Nu am motivație</span><br>
+        <span style="text-decoration: line-through; color: #555;">Am ratat, deci nu sunt suficientă</span><br>
+        <span style="text-decoration: line-through; color: #555;">Nu am timp</span>
+      </div>
+    </div>
+    
+    <div class="rv step" style="display: flex; align-items: center; gap: 40px; width: 100%;">
+      <div style="width: 25%; flex-shrink: 0;">
+        <div class="nume">Cristina</div>
+        <div class="rol">cine ești în tot procesul într-adevăr</div>
+      </div>
+      <div class="tree-line" style="flex-grow: 1; height: 2px; background: color-mix(in srgb, var(--accent) 40%, transparent);"></div>
+      <div style="text-align: right; font-size: 38px; line-height: 1.4; flex-shrink: 0;">
+        <span style="text-decoration: line-through; color: #555;">Victimă</span> &nbsp;&nbsp;&nbsp; <span style="text-decoration: line-through; color: #555;">Criticul aspru</span> &nbsp;&nbsp;&nbsp; <span style="text-decoration: line-through; color: #555;">Resemnare</span><br>
+        <span style="color: var(--accent);">Rol</span> &bull; <span style="color: var(--accent);">Acceptare</span> &bull; <span style="color: var(--accent);">Acțiune</span>
+      </div>
+    </div>
+    
+    <div class="rv step" style="display: flex; align-items: center; gap: 40px; width: 100%;">
+      <div style="width: 25%; flex-shrink: 0;">
+        <div class="nume">Rareș</div>
+        <div class="rol">ce se întâmplă în corp la noi</div>
+      </div>
+      <div class="tree-line" style="flex-grow: 1; height: 2px; background: color-mix(in srgb, var(--accent) 40%, transparent);"></div>
+      <div style="text-align: right; font-size: 38px; line-height: 1.4; flex-shrink: 0;">
+        <span style="text-decoration: line-through; color: #555;">Leneș</span> &nbsp;&nbsp;&nbsp; <span style="text-decoration: line-through; color: #555;">Lipsă de caracter</span><br>
+        <span style="color: var(--accent);">Neuroștiințific</span> &bull; <span style="color: var(--accent);">Sistem</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide sponsori" id="slide-7">
+  <span class="eyebrow reveal d1">Oamenii fără care nu am fi aici</span>
+  <h2 class="reveal d2">Șapte parteneri. Trei zone de focus.</h2>
+  
+  <div style="display: flex; justify-content: space-between; gap: 50px; margin-top: 80px; width: 100%;">
+    
+    <div class="reveal d3" style="flex: 1; display: flex; flex-direction: column; gap: 35px;">
+      <h3 style="color: var(--accent); font-size: 28px; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); padding-bottom: 15px; margin-bottom: 10px;">Corp &amp; Performanță</h3>
+      <div><div class="nm" style="font-size: 42px; font-weight: 500;">NeoBoost</div><div class="zn" style="font-size: 26px; color: var(--muted-foreground);">EMS &amp; mișcare</div></div>
+      <div><div class="nm" style="font-size: 42px; font-weight: 500;">MYX Health</div><div class="zn" style="font-size: 26px; color: var(--muted-foreground);">nutriție sportivă</div></div>
+      <div><div class="nm" style="font-size: 42px; font-weight: 500;">Multisport Lab</div><div class="zn" style="font-size: 26px; color: var(--muted-foreground);">testare InBody</div></div>
+    </div>
+    
+    <div class="reveal d4" style="flex: 1; display: flex; flex-direction: column; gap: 35px;">
+      <h3 style="color: var(--accent); font-size: 28px; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); padding-bottom: 15px; margin-bottom: 10px;">Sănătate &amp; Prevenție</h3>
+      <div><div class="nm" style="font-size: 42px; font-weight: 500;">Life Dental Spa</div><div class="zn" style="font-size: 26px; color: var(--muted-foreground);">stomatologie laser</div></div>
+      <div><div class="nm" style="font-size: 42px; font-weight: 500;">Echo Laboratoare</div><div class="zn" style="font-size: 26px; color: var(--muted-foreground);">analize medicale</div></div>
+    </div>
+    
+    <div class="reveal d5" style="flex: 1; display: flex; flex-direction: column; gap: 35px;">
+      <h3 style="color: var(--accent); font-size: 28px; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); padding-bottom: 15px; margin-bottom: 10px;">Estetică &amp; Imagine</h3>
+      <div><div class="nm" style="font-size: 42px; font-weight: 500;">Charme Medical</div><div class="zn" style="font-size: 26px; color: var(--muted-foreground);">recuperare &amp; estetică</div></div>
+      <div><div class="nm" style="font-size: 42px; font-weight: 500;">Salon FYA</div><div class="zn" style="font-size: 26px; color: var(--muted-foreground);">design rochii de mireasă</div></div>
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="slide foto" id="slide-12">
+  <div class="lipsa">claudia.png</div>
+  <img src="claudia.png" alt="Ea e Claudia">
+</section>
+<section class="slide poster" id="slide-13">
+  <span class="eyebrow reveal d1">Trei propoziții din cabinet</span>
+  <h1 class="reveal d2">Le-am auzit pe toate<br>de <em>sute de ori</em>.</h1>
+</section>
+<section class="slide mit" id="slide-14">
+  <span class="eyebrow reveal d1">Situația unu</span>
+  <div><span class="fals reveal d2">Am nevoie de motivație ca să mă apuc.</span></div>
+  <div class="adevar reveal d4">Motivația e consecința acțiunii.</div>
+</section>
+<section class="slide reco" id="slide-15">
+  <span class="eyebrow reveal d1">Ce recomand</span>
+  <h2 class="reveal d2">Nu întreba „am chef?”</h2>
+  <div class="r step"><span class="b">→</span><span class="t">Care e cel mai mic pas pe care îl pot face astăzi?</span></div>
+  <div class="r step"><span class="b">→</span><span class="t">Ce aș face dacă aș ști că motivația nu va veni?</span></div>
+</section>
+<section class="slide mit" id="slide-18">
+  <span class="eyebrow reveal d1">Situația trei</span>
+  <div><span class="fals reveal d2">Rezultatul spune cine sunt.</span></div>
+  <div class="adevar reveal d4">Analizează performanța, nu persoana.</div>
+</section>
+<section class="slide reco" id="slide-19">
+  <span class="eyebrow reveal d1">Ce recomand</span>
+  <h2 class="reveal d2">Trei întrebări după fiecare eșec.</h2>
+  <div class="r step"><span class="b">→</span><span class="t">Ce am făcut bine?</span></div>
+  <div class="r step"><span class="b">→</span><span class="t">Ce pot îmbunătăți?</span></div>
+  <div class="r step"><span class="b">→</span><span class="t">Ce învăț pentru data viitoare?</span></div>
+</section>
+<section class="slide mit" id="slide-22">
+  <span class="eyebrow reveal d1">Situația cinci</span>
+  <div><span class="fals reveal d2">Am nevoie de mai mult timp.</span></div>
+  <div class="adevar reveal d4">Începe mic. Repetă des.</div>
+</section>
+<section class="slide liniste" id="slide-23">
+  <h1 class="reveal-scale d1">10 minute.</h1>
+  <p class="reveal d3">Dacă după zece minute tot simți că nu poți continua, oprește-te.<br>În majoritatea cazurilor vei continua.</p>
+</section>
+<section class="slide poster" id="slide-24">
+  <h1 class="reveal-blur d1">Nu aveți nevoie de mai multă presiune.<br>Aveți nevoie să știți că <em>fluctuațiile sunt normale</em>.</h1>
+</section>
+<section class="slide foto" id="slide-25">
+  <div class="lipsa">cristina.png</div>
+  <img src="cristina.png" alt="Ea e Cristina">
+</section>
+<section class="slide unmit" id="slide-26">
+  <div class="mare reveal d1">Rol</div>
+  <p class="reveal d3">Fiecare joacă un rol în relația cu propriul corp. Antrenorul aspru. Victima. Criticul care nu tace niciodată. Cei mai mulți nu l-au ales conștient.</p>
+</section>
+<section class="slide unmit" id="slide-27">
+  <div class="mare reveal d1">Acceptare</div>
+  <p class="reveal d3">Nu înseamnă resemnare. Înseamnă că nu poți schimba un punct de plecare pe care refuzi să îl privești.</p>
+</section>
+<section class="slide unmit" id="slide-28">
+  <div class="mare reveal d1">Acțiune</div>
+  <p class="reveal d3">Al treilea, nu primul. Majoritatea sar direct aici, cu un rol nepotrivit și fără să accepte de unde pleacă. De aia se opresc în trei săptămâni.</p>
+</section>
+<section class="slide cuvinte" id="slide-29">
+  <div class="c step">Rol</div>
+  <div class="c step">Acceptare</div>
+  <div class="c step">Acțiune</div>
+</section>
+<section class="slide foto" id="slide-30">
+  <div class="lipsa">rares.png</div>
+  <img src="rares.png" alt="Eu sunt Rareș">
+</section>
+<section class="slide dramatic" id="slide-31-a">
+  <span class="eyebrow reveal d1">Mitul #1</span>
+  <h2 class="reveal d2">Motivația este suficientă.</h2>
+  <div class="ce reveal d3" style="margin-top: 2rem;">Disciplina bate motivația în zilele în care nu ai chef.</div>
+</section>
+<section class="slide dramatic" id="slide-31-b">
+  <span class="eyebrow reveal d1">Regula de aur</span>
+  <h2 class="reveal d2">Consistența bate intensitatea.</h2>
+  <div class="ce reveal d3" style="margin-top: 2rem;">Mai bine 30 de minute zilnic, decât 3 ore duminica.</div>
+</section>
+<section class="slide poster" id="slide-31-c">
+  <h1 class="reveal d1">Rezultatele vin din <em>obiceiuri</em>,<br>nu din excepții.</h1>
+</section>
+<section class="slide dramatic" id="slide-32">
+  <span class="eyebrow reveal d1">Mitul de sub toate celelalte</span>
+  <div><span class="taiat reveal d3">E ceva în neregulă cu mine.</span></div>
+</section>
+<section class="slide poster" id="slide-33">
+  <h1 class="reveal d1">Nu cu vorbe frumoase.<br>Cu <em>trei cifre</em>.</h1>
+</section>
+<section class="slide grafic" id="slide-34">
+  <span class="eyebrow reveal d1">Cifra unu</span>
+  <h2 class="reveal d2">Săptămânile 2 până la 8.</h2>
+  <div class="plansa reveal d3">
+    <svg viewBox="0 0 1520 560" preserveAspectRatio="xMidYMid meet">
+      <rect class="zdesert" x="320" y="50" width="690" height="400" rx="6"></rect>
+      <text class="tdesert" x="665" y="300" text-anchor="middle">DEȘERT</text>
+      <path class="traseu desen" d="M 60 70 C 210 82, 290 280, 460 430 C 550 458, 690 462, 1460 458"></path>
+      <text class="eticheta" x="70" y="44">entuziasmul noutății</text>
+      <path class="traseu doi desen b" d="M 60 458 C 490 458, 680 448, 880 366 C 1100 262, 1250 120, 1460 70"></path>
+      <text class="eticheta" x="1460" y="44" text-anchor="end">plăcerea reală a mișcării</text>
+      <line x1="60" y1="492" x2="1460" y2="492" stroke="rgba(245,240,232,0.15)" stroke-width="1"></line>
+      <text class="axa" x="60" y="530" text-anchor="middle">0</text>
+      <text class="axa" x="320" y="530" text-anchor="middle">2</text>
+      <text class="axa" x="550" y="530" text-anchor="middle">4</text>
+      <text class="axa" x="780" y="530" text-anchor="middle">6</text>
+      <text class="axa" x="1010" y="530" text-anchor="middle">8</text>
+      <text class="axa" x="1460" y="530" text-anchor="end">săptămâni</text>
+    </svg>
+  </div>
+</section>
+<section class="slide poster" id="slide-35">
+  <h1 class="reveal d1">Nu ți-a lipsit caracterul.<br>Erai în <em>pană de combustibil</em>.</h1>
+</section>
+<section class="slide cifre" id="slide-36">
+  <span class="eyebrow reveal d1">Cifra doi</span>
+  <div class="pereche">
+    <div class="mic reveal d2">21</div>
+    <div class="mare reveal-scale d4">66</div>
+  </div>
+  <div class="zile reveal d6">zile</div>
+</section>
+<section class="slide poster" id="slide-37">
+  <h1 class="reveal d1">Nu ai eșuat prea repede.<br>Ai măsurat cu un <em>cronometru stricat</em>.</h1>
+</section>
+<section class="slide grafic" id="slide-38">
+  <span class="eyebrow reveal d1">Cifra trei</span>
+  <h2 class="reveal d2">Contorul nu se resetează.</h2>
+  <div class="plansa reveal d3">
+    <svg viewBox="0 0 1520 440" preserveAspectRatio="xMidYMid meet">
+      <path class="traseu desen" d="M 60 380 C 300 344, 490 270, 690 228"></path>
+      <circle cx="750" cy="221" r="13" fill="none" stroke="#d4a857" stroke-width="3"></circle>
+      <path class="traseu desen b" d="M 810 217 C 1030 194, 1270 110, 1460 46"></path>
+      <text class="eticheta" x="750" y="300" text-anchor="middle">o zi ratată</text>
+    </svg>
+  </div>
+  <p class="reveal d6">Nu pauza te doboară. <em>Perfecționismul</em> te doboară.</p>
+</section>
+<section class="slide reco" id="slide-39">
+  <span class="eyebrow reveal d1">Trei reguli, concret</span>
+  <h2 class="reveal d2">Ce faci cu cele trei cifre.</h2>
+  <div class="r step"><span class="b">→</span><span class="t">Nu-ți promite 21 de zile. Promite-ți 70.</span></div>
+  <div class="r step"><span class="b">→</span><span class="t">În deșert nu urmări cum te simți. Urmărește dacă te-ai prezentat.</span></div>
+  <div class="r step"><span class="b">→</span><span class="t">Nu rata niciodată de două ori la rând.</span></div>
+</section>
+<section class="slide piese" id="slide-40">
+  <span class="eyebrow reveal d1">Din ce e făcut un sistem</span>
+  <h2 class="reveal d2">Patru piese.</h2>
+  <div class="item step"><span class="nr">1</span><span class="txt">Recompensa imediată</span></div>
+  <div class="item step"><span class="nr">2</span><span class="txt">Lanțul</span></div>
+  <div class="item step"><span class="nr">3</span><span class="txt">Identitatea</span></div>
+  <div class="item step"><span class="nr">4</span><span class="txt">Alegerea</span></div>
+</section>
+<section class="slide poster" id="slide-41">
+  <h1 class="reveal d1">Nu construiești un corp.<br>Construiești <em>un om</em>.</h1>
+</section>
+<section class="slide jurnal" id="slide-42">
+  <span class="eyebrow reveal d1">Instrumentul</span>
+  <h2 class="reveal d2">Athlete's Journal. Cele patru piese, pe hârtie.</h2>
+  <div class="cutii">
+    <div class="cutie step"><div class="k">Căsuța de bifat</div><div class="d">Recompensa imediată, în fiecare zi</div></div>
+    <div class="cutie step"><div class="k">Lanțul zilelor</div><div class="d">Ce devine prea valoros ca să-l pierzi</div></div>
+    <div class="cutie step"><div class="k">Mica victorie</div><div class="d">Un vot pentru omul care devii</div></div>
+    <div class="cutie step"><div class="k">Revino fără vinovăție</div><div class="d">Un buton pentru zilele în care ai căzut</div></div>
+  </div>
+  <div class="nota reveal d7">Digital, gratuit, pentru toți din sală. Vi-l trimit pe WhatsApp.</div>
+</section>
+<section class="slide liniste" id="slide-43">
+  <h1 class="reveal-scale d1">Ce faci mâine?</h1>
+  <p class="reveal d4">Un singur lucru. Atât de mic încât să ți se pară ridicol că l-ai putea rata.</p>
+</section>
+<section class="slide sinteza" id="slide-44">
+  <span class="eyebrow reveal d1">Toată seara, în trei propoziții</span>
+  <div class="linie step"><span class="cine">Claudia</span><span class="zice">Motivația nu e punctul de plecare. E consecința.</span></div>
+  <div class="linie step"><span class="cine">Cristina</span><span class="zice">Nu poți porni până nu accepți de unde pornești.</span></div>
+  <div class="linie step"><span class="cine">Rareș</span><span class="zice">Nu e nimic în neregulă cu voi. Ați citit greșit un calendar pe care nimeni nu vi l-a arătat.</span></div>
+</section>
+<section class="slide final" id="slide-45">
+  <h1 class="reveal-scale d2">Deja ești suficient.</h1>
+</section>
+<section class="slide lumina" id="slide-46">
+  <h1 class="reveal-blur d1">Lumina</h1>
+  <div class="piloni reveal d3">Corp · Nutriție · Meditație · Jurnal</div>
+  <div class="privat reveal d4">Jurnal privat. Nu vede nimeni nimic.</div>
+</section>
+<section class="slide liniste" id="slide-47" style="background: linear-gradient(rgba(20, 16, 13, 0.3), rgba(20, 16, 13, 0.8)), url('bg_tombola.jpg') center/cover no-repeat;">
+  <span class="eyebrow reveal d1">Și acum</span>
+  <h1 class="reveal-scale d2" style="margin-bottom: 20px;">Tombola.</h1>
+  <div class="lista reveal d3" style="text-align: left; max-width: 900px; margin: 0 auto;">
+    <div class="item step"><span class="n">01</span><span class="t">Consultație psihologică (Cristina Cecan)</span></div>
+    <div class="item step"><span class="n">02</span><span class="t">Abonament 4 ședințe (NeoBoost)</span></div>
+    <div class="item step"><span class="n">03</span><span class="t">Consult + Proteină 2 luni (MYX Health &amp; Ecolaboratoare)</span></div>
+    <div class="item step">
+      <span class="n">04</span>
+      <span class="t" style="color: var(--accent); display: flex; align-items: center; gap: 20px;">
+        Ședință de ozonoterapie gratuită
+        <img src="logo_life_dental.png" alt="Life Dental Spa" style="height: 45px; background: white; padding: 5px 10px; border-radius: 5px;">
+      </span>
+    </div>
+  </div>
+</section>
+<section class="slide poster" id="slide-47-a">
+  <span class="eyebrow reveal d1">Provocarea Fit Fără Filtre</span>
+  <h2 class="reveal-scale d2" style="font-size: 70px;">Jurnalul de 30 de zile.</h2>
+
+  <div class="reveal d3" style="display: flex; gap: 40px; margin-top: 60px; max-width: 85vw; margin-left: auto; margin-right: auto; align-items: stretch;">
+    
+    <div style="flex: 1; text-align: left; line-height: 1.6; font-size: 26px;">
+      <ul style="list-style: none; padding: 0; margin: 0 0 30px 0; font-size: 24px; opacity: 0.9;">
+        <li style="margin-bottom: 15px;"><span style="color: var(--accent); font-weight: bold;">• O pagină pe zi.</span> Nu-ți cere voință, îți cere 3 minute.</li>
+        <li style="margin-bottom: 15px;"><span style="color: var(--accent); font-weight: bold;">• Mica victorie.</span> Închizi ziua în scris ca să declanșezi dopamina.</li>
+        <li style="margin-bottom: 15px;"><span style="color: var(--accent); font-weight: bold;">• Provocarea ta.</span> Atât de mică încât e ridicol să o ratezi.</li>
+        <li style="margin-bottom: 15px;"><span style="color: var(--accent); font-weight: bold;">• Nu se resetează.</span> Pauza nu te doboară, perfecționismul te doboară.</li>
+      </ul>
+      <span style="color: var(--accent); font-weight: bold; font-size: 28px;">Gratuit:</span> Primești documentul digital pe WhatsApp.<br>
+      <span style="color: var(--accent); font-weight: bold; font-size: 28px;">Personalizat:</span> La sală ți-l configurăm exact pe planul tău.
+    </div>
+
+    <div style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+      <div style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; border-left: 4px solid var(--accent); flex: 1; display: flex; align-items: center; justify-content: space-between;">
+        <div style="text-align: left; font-size: 22px; line-height: 1.5;">
+          <span style="color: var(--accent); font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; font-size: 26px;">Intră în posesia lui</span><br>
+          <span style="font-weight: bold;">1.</span> Scanează codul QR.<br>
+          <span style="font-weight: bold;">2.</span> Se deschide mesajul pe WhatsApp.<br>
+          <span style="font-weight: bold;">3.</span> Trimite-l și primești PDF-ul instant.
+        </div>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://wa.me/40769124019?text=Vreau+sa+incep+provocarea&qzone=2" alt="QR Code WhatsApp" style="width: 140px; height: 140px; border-radius: 10px; margin-left: 20px; border: 4px solid white;">
+      </div>
+
+      <div style="background: rgba(255,255,255,0.02); padding: 20px 25px; border-radius: 15px; flex: 1; text-align: left; display: flex; align-items: center; gap: 20px;">
+        <div style="flex: 1;">
+          <span style="color: rgba(255,255,255,0.5); font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; font-size: 18px;">Opțional: Pariul cu tine însuți</span><br>
+          <span style="font-size: 20px; display: block; margin-top: 10px; line-height: 1.5; opacity: 0.8;">
+            Motivația supremă. Te înscrii în pariu cu 0 lei (doar garanție pe card). Dacă nu trimiți jurnalul completat după 30 de zile, abia atunci ești taxat. Dacă te ții de treabă, <strong>nu îți ia nimeni niciun ban.</strong>
+          </span>
+        </div>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://buy.stripe.com/dRm8wQbWI4TBbZq5Lf4Ni07" alt="QR Code Stripe" style="width: 120px; height: 120px; border-radius: 10px; border: 4px solid var(--accent);">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="slide-47-a1">
+  <span class="eyebrow reveal d1">Pagină din jurnal (Digital &amp; Print)</span>
+  <h2 class="reveal-scale d2">Punct de plecare.</h2>
+  <div class="reveal d3" style="display: flex; gap: 80px; max-width: 80vw; margin: 30px auto 0 auto; align-items: stretch;">
+    <div style="flex: 1; text-align: right;">
+      <img src="jurnal_inner_pg3.png" style="height: 650px; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
+    </div>
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+      <form class="fillable-form" onsubmit="event.preventDefault();">
+        <label>Obiectivul meu pentru aceste 30 de zile</label>
+        <textarea placeholder="Scrie aici..."></textarea>
+        <label>De ce contează pentru mine</label>
+        <textarea placeholder="Scrie aici..."></textarea>
+        <label>Eu sunt genul de om care...</label>
+        <input type="text" placeholder="Completează fraza...">
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="slide-47-a2">
+  <span class="eyebrow reveal d1">Pagină din jurnal (Digital &amp; Print)</span>
+  <h2 class="reveal-scale d2">Primul vot.</h2>
+  <div class="reveal d3" style="display: flex; gap: 80px; max-width: 80vw; margin: 30px auto 0 auto; align-items: stretch;">
+    <div style="flex: 1; text-align: right;">
+      <img src="jurnal_inner_pg5.png" style="height: 650px; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
+    </div>
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+      <form class="fillable-form" onsubmit="event.preventDefault();">
+        <label>Mâine fac acest lucru</label>
+        <input type="text" placeholder="Ex: Merg 10 minute pe jos">
+        <label>La ce oră &amp; Unde</label>
+        <input type="text" placeholder="Ex: 08:00, în jurul blocului">
+        <label>Ce fac în zilele în care nu am chef</label>
+        <textarea placeholder="Planul de rezervă..."></textarea>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="slide-47-a3">
+  <span class="eyebrow reveal d1">Pagină din jurnal (Digital &amp; Print)</span>
+  <h2 class="reveal-scale d2">Căsuța de bifat (Ziua 1).</h2>
+  <div class="reveal d3" style="display: flex; gap: 80px; max-width: 80vw; margin: 30px auto 0 auto; align-items: stretch;">
+    <div style="flex: 1; text-align: right;">
+      <img src="jurnal_inner_pg6.png" style="height: 650px; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
+    </div>
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+      <form class="fillable-form" onsubmit="event.preventDefault();">
+        <label>Provocarea zilei</label>
+        <input type="text" value="Bea 2 litri de apă azi">
+        <label>Mica victorie de azi</label>
+        <textarea placeholder="Ce a mers bine azi..."></textarea>
+        <div style="display: flex; gap: 20px;">
+          <div style="flex: 1;"><label>Dimineața</label><input type="number" min="1" max="5" placeholder="1-5"></div>
+          <div style="flex: 1;"><label>Prânz</label><input type="number" min="1" max="5" placeholder="1-5"></div>
+          <div style="flex: 1;"><label>Seara</label><input type="number" min="1" max="5" placeholder="1-5"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="slide-47-a2">
+  <span class="eyebrow reveal d1">De unde a pornit Lumina</span>
+  <h2 class="reveal d2">Totul a început personal.</h2>
+  <div class="ce reveal d3" style="margin-top: 2rem; max-width: 60vw;">
+    <p style="font-size: 32px; font-style: italic; color: var(--accent); margin-bottom: 2rem;">„Lumina s-a născut din nevoia unui sistem care să mă vadă ca întreg, nu ca patru aplicații separate.”</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; text-align: left;">
+      <div>
+        <h3 style="font-family: var(--font-serif); font-size: 30px; margin-bottom: 10px;">Din jurnal, sport și alimentație.</h3>
+        <p style="opacity: 0.8; font-size: 22px; line-height: 1.5;">Fiecare aplicație vedea doar o bucată. Contextul se pierdea între instrumente, iar noi suntem un singur sistem complex.</p>
+      </div>
+      <div>
+        <h3 style="font-family: var(--font-serif); font-size: 30px; margin-bottom: 10px;">The Body Mind Hub a extins ideea.</h3>
+        <p style="opacity: 0.8; font-size: 22px; line-height: 1.5;">Tehnologia poate oferi context specialiștilor (psiholog, antrenor, nutriționist), fără să înlocuiască relația umană.</p>
+      </div>
+    </div>
+  </div>
+  <div class="reveal d4" style="position: absolute; right: 120px; bottom: 120px; text-align: center;">
+    <img src="https://avatars.githubusercontent.com/u/219466567?v=4" alt="Rares Pantis" style="width: 250px; height: 250px; object-fit: cover; border-radius: 50%; border: 4px solid var(--accent); margin-bottom: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+    <div style="font-family: var(--font-serif); font-size: 24px;">Rareș Pantiș</div>
+    <div style="color: var(--accent); font-size: 14px; text-transform: uppercase; letter-spacing: 2px;">Fondator Lumina</div>
+  </div>
+</section>
+
+<section class="slide" id="slide-47-b">
+  <span class="eyebrow reveal d1">Lumina.app susține mișcarea noastră</span>
+  <h2 class="reveal d2">Tot ecosistemul într-un singur loc.</h2>
+  <div class="ce reveal d3" style="margin-top: 2rem; max-width: 55vw;">
+    <ul style="list-style: none; padding: 0; margin-bottom: 30px; line-height: 1.8;">
+      <li><span style="color: var(--accent); margin-right: 15px;">•</span> Jurnal digital &amp; Tracking obiceiuri</li>
+      <li><span style="color: var(--accent); margin-right: 15px;">•</span> Nutriție &amp; Alimentație</li>
+      <li><span style="color: var(--accent); margin-right: 15px;">•</span> Meditație &amp; Psihologie</li>
+      <li><span style="color: var(--accent); margin-right: 15px;">•</span> Corp &amp; Mișcare</li>
+    </ul>
+    Aplicația care închide cercul și pune în practică tot ce am vorbit azi.
+  </div>
+  <img src="lumina_dashboard.jpg" alt="Lumina Dashboard" class="reveal d4" style="position: absolute; right: 0; bottom: 0; height: 75vh; border-top-left-radius: 20px; box-shadow: -10px -10px 50px rgba(0,0,0,0.5);">
+</section>
+<section class="slide" id="slide-47-c">
+  <span class="eyebrow reveal d1">Lumina.app</span>
+  <h2 class="reveal d2">Specialistul, direct din aplicație.</h2>
+  <div class="ce reveal d3" style="margin-top: 2rem; max-width: 60vw;">Te conectăm automat cu terapeuți, antrenori și nutriționiști în funcție de evoluția ta.<br><br><em>Am început deja să lucrăm la acest proiect.</em></div>
+  <img src="lumina_connect.jpg" alt="Lumina Connect" class="reveal d4" style="position: absolute; right: 0; bottom: 0; height: 75vh; border-top-left-radius: 20px; box-shadow: -10px -10px 50px rgba(0,0,0,0.5);">
+</section>
+<section class="slide poster" id="slide-48">
+  <h1 class="reveal d1">Mulțumim că<br>ați fost <em>aici</em>.</h1>
+  <img class="marca reveal d3" src="logo.png" alt="The Body Mind Hub" style="height: 140px; width: auto; border-radius: 50%; display: block; margin: 0 auto;">
+</section>
+<section class="slide" id="slide-49">
+  <span class="eyebrow reveal d1">Rămânem în legătură</span>
+  <h2 class="reveal-scale d2">Corp, emoție, mental.</h2>
+  <div class="lista reveal d3" style="text-align: left; max-width: 900px; margin: 3rem auto 0 auto; display: flex; flex-direction: column; gap: 20px;">
+    <div style="display: flex; align-items: center; gap: 25px; background: rgba(255,255,255,0.05); padding: 20px 30px; border-radius: 15px; border-left: 4px solid var(--accent);">
+      <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent); color: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px;">R</div>
+      <div style="flex: 1;">
+        <div style="color: var(--accent); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">Corpul · Fondator &amp; Antrenor</div>
+        <div style="font-size: 26px; font-family: var(--font-serif);">Rareș Pantiș</div>
+      </div>
+      <div style="font-size: 20px; opacity: 0.8; font-family: monospace;">0769 124 019</div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 25px; background: rgba(255,255,255,0.05); padding: 20px 30px; border-radius: 15px; border-left: 4px solid var(--accent);">
+      <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent); color: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px;">C</div>
+      <div style="flex: 1;">
+        <div style="color: var(--accent); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">Emoția · Psiholog Clinician</div>
+        <div style="font-size: 26px; font-family: var(--font-serif);">Claudia Cosma</div>
+      </div>
+      <div style="font-size: 20px; opacity: 0.8; font-family: monospace;">0742 353 586</div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 25px; background: rgba(255,255,255,0.05); padding: 20px 30px; border-radius: 15px; border-left: 4px solid var(--accent);">
+      <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent); color: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px;">C</div>
+      <div style="flex: 1;">
+        <div style="color: var(--accent); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">Mentalul · Psiholog Clinician</div>
+        <div style="font-size: 26px; font-family: var(--font-serif);">Cristina Cecan</div>
+      </div>
+      <div style="font-size: 20px; opacity: 0.8; font-family: monospace;">0752 146 381</div>
+    </div>
+  </div>
+  <div class="nota reveal d5" style="margin-top: 50px; font-size: 22px; max-width: 800px; line-height: 1.5;">Nu te mișca pentru a deveni suficient. Mișcă-te pentru că deja ești.</div>
+</section>
+</div>
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let currentSlide = 0;
+
+  function applyHash() {
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#')) {
+      const target = document.querySelector(hash);
+      if (target) {
+        const idx = Array.from(slides).indexOf(target);
+        if (idx !== -1) currentSlide = idx;
+      }
+    }
+  }
+  applyHash();
+
+  window.addEventListener('hashchange', () => {
+    applyHash();
+    updateSlides(false);
+  });
+
+  function updateSlides(push = true) {
+    slides.forEach((s, i) => {
+      if (i === currentSlide) {
+        s.classList.add('active');
+        s.removeAttribute('inert');
+        const animatedEls = s.querySelectorAll('.desen, .reveal, .reveal-blur, .reveal-scale, .step');
+        animatedEls.forEach(el => {
+           el.style.animation = 'none';
+           el.offsetHeight;
+           el.style.animation = null; 
+        });
+      } else {
+        s.classList.remove('active');
+        s.setAttribute('inert', '');
+      }
+    });
+    
+    const currentId = slides[currentSlide].id || ('slide-' + (currentSlide + 1));
+    if (push) {
+      window.history.pushState(null, null, '#' + currentId);
+    }
+  }
+
+  function nextSlide() {
+    if (currentSlide < slides.length - 1) {
+      currentSlide++;
+      updateSlides();
+    }
+  }
+
+  function prevSlide() {
+    if (currentSlide > 0) {
+      currentSlide--;
+      updateSlides();
+    }
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') nextSlide();
+    else if (e.key === 'ArrowLeft' || e.key === 'Backspace') prevSlide();
+    else if (e.key === 'r' || e.key === 'R') { currentSlide = 0; updateSlides(); }
+    else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else if (document.exitFullscreen) document.exitFullscreen();
+    }
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', e => {
+    const touchEndX = e.changedTouches[0].screenX;
+    if (touchStartX - touchEndX > 50) nextSlide();
+    if (touchEndX - touchStartX > 50) prevSlide();
+  });
+
+  function resizeDeck() {
+    const deck = document.querySelector('.deck');
+    const isOverview = document.body.classList.contains('overview-mode');
+    
+    const availableWidth = isOverview ? window.innerWidth - 320 : window.innerWidth;
+    const availableHeight = window.innerHeight;
+    
+    const scale = Math.min(availableWidth / 1920, availableHeight / 1080);
+    
+    const scaledWidth = 1920 * scale;
+    const scaledHeight = 1080 * scale;
+    
+    const offsetX = (availableWidth - scaledWidth) / 2;
+    const offsetY = (availableHeight - scaledHeight) / 2;
+    
+    const shiftX = isOverview ? 320 + offsetX : offsetX;
+    
+    deck.style.transform = `translate(${shiftX}px, ${offsetY}px) scale(${scale})`;
+  }
+  
+  window.addEventListener('resize', resizeDeck);
+  resizeDeck();
+  updateSlides(false);
+
+  // --- OVERVIEW MODE SIDEBAR ---
+  function initSidebar() {
+    const sidebar = document.createElement('div');
+    sidebar.id = 'slide-sidebar';
+    document.body.appendChild(sidebar);
+
+    let currentSpeaker = 'rares';
+    slides.forEach((slide, index) => {
+      if (slide.id === 'slide-12') currentSpeaker = 'claudia';
+      if (slide.id === 'slide-25') currentSpeaker = 'cristina';
+      if (slide.id === 'slide-31-a') currentSpeaker = 'rares';
+      
+      const thumb = document.createElement('div');
+      thumb.className = `slide-thumb speaker-${currentSpeaker}`;
+      thumb.id = `thumb-${index}`;
+      
+      const content = slide.cloneNode(true);
+      content.className = 'thumb-clone';
+      content.removeAttribute('id');
+      content.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+      
+      thumb.appendChild(content);
+      
+      thumb.addEventListener('click', () => {
+        currentSlide = index;
+        updateSlides(false);
+        document.querySelectorAll('.slide-thumb').forEach(t => t.classList.remove('active-thumb'));
+        thumb.classList.add('active-thumb');
+      });
+      
+      sidebar.appendChild(thumb);
+    });
+  }
+  initSidebar();
+
+  function toggleOverview() {
+    document.body.classList.toggle('overview-mode');
+    const btn = document.getElementById('overview-toggle');
+    if (document.body.classList.contains('overview-mode')) {
+      btn.innerHTML = '✕';
+      // Sync active thumb
+      document.querySelectorAll('.slide-thumb').forEach(t => t.classList.remove('active-thumb'));
+      const activeThumb = document.getElementById(`thumb-${currentSlide}`);
+      if (activeThumb) {
+        activeThumb.classList.add('active-thumb');
+        activeThumb.scrollIntoView({ behavior: 'auto', block: 'center' });
+      }
+    } else {
+      btn.innerHTML = '⊞';
+    }
+    resizeDeck();
+  }
+
+  // Create Button
+  const overviewBtn = document.createElement('button');
+  overviewBtn.id = 'overview-toggle';
+  overviewBtn.innerHTML = '⊞';
+  overviewBtn.title = "Apasă ESC pentru a comuta";
+  overviewBtn.onclick = toggleOverview;
+  document.body.appendChild(overviewBtn);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') toggleOverview();
+  });
+</script>
+</body>
+</html>
