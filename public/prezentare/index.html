@@ -1433,7 +1433,7 @@ body.overview-mode #slide-sidebar {
     width: 56px;
     height: 56px;
     color: #D4A857;
-    opacity: 0.08;
+    opacity: 0.2;
     pointer-events: none;
     z-index: 1000 !important;
     display: flex;
@@ -1467,7 +1467,10 @@ body.overview-mode #slide-sidebar {
     color: #D4A857;
   }
   body.cue-mode memory-anchor {
-    opacity: 0.35;
+    opacity: 1 !important;
+  }
+  body.cue-mode memory-anchor svg {
+    stroke-width: 2;
   }
   body.cue-mode memory-anchor span {
     display: block;
