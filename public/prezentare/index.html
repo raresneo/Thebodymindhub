@@ -1428,12 +1428,13 @@ body.overview-mode #slide-sidebar {
 
   memory-anchor {
     position: absolute !important;
-    bottom: 60px !important;
-    right: 60px !important;
-    width: 160px;
-    height: 160px;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 600px;
+    height: 600px;
     color: #D4A857;
-    opacity: 0.05;
+    opacity: 0.02;
     pointer-events: none;
     z-index: 1 !important; /* Behind the main text layer to act as a watermark */
     display: flex;
@@ -1443,10 +1444,8 @@ body.overview-mode #slide-sidebar {
   }
   @media (max-width: 768px) {
     memory-anchor {
-      width: 80px;
-      height: 80px;
-      bottom: 30px !important;
-      right: 30px !important;
+      width: 300px;
+      height: 300px;
     }
   }
   memory-anchor svg {
@@ -1461,20 +1460,10 @@ body.overview-mode #slide-sidebar {
     stroke-width: 1.5px;
   }
   memory-anchor span {
-    display: none;
-    font-family: monospace;
-    font-size: 14px;
-    margin-top: 15px;
-    text-transform: uppercase;
-    text-align: center;
-    color: #D4A857;
-    letter-spacing: 0.1em;
+    display: none !important;
   }
   body.cue-mode memory-anchor {
-    opacity: 0.25 !important;
-  }
-  body.cue-mode memory-anchor span {
-    display: block;
+    opacity: 0.08 !important;
   }
   @media print {
     memory-anchor { display: none !important; }
