@@ -1507,12 +1507,11 @@ class MemoryAnchor extends HTMLElement {
 }
 customElements.define('memory-anchor', MemoryAnchor);
 
-document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('cue') === '1') {
-    document.body.classList.add('cue-mode');
-  }
-});
+const params = new URLSearchParams(window.location.search);
+if (params.get('cue') === '1') {
+  document.body.classList.add('cue-mode');
+}
+console.log("Memory anchors loaded and ready.");
 </script>
 </body>
 
